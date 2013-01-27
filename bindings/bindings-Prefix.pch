@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'bindings' target in the 'bindings' project
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+#endif

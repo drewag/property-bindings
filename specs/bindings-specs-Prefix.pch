@@ -1,0 +1,9 @@
+//
+// Prefix header for all source files of the 'bindings-specs' target in the 'bindings-specs' project
+//
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+    #import <Cedar-iOS/SpecHelper.h>
+#endif
