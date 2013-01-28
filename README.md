@@ -14,14 +14,42 @@ Import the header for the Bindings extension:
 #import "bindings/NSObject+Binding.h"
 ```
 
-When you would like to ensure that an objects property is always the same as another objects do the following:
+Basics
+---------
+
+The Bindings extension provides the following methods to all NSObjects:
+
+    - (void)bindProperty:(NSString *)observingKeyPath
+              toObserved:(NSObject *)observed
+             withKeyPath:(NSString *)observedKeyPath;
+
+    - (void)unbindProperty:(NSString *)keyPath;
+    - (void)unbindAll;
+
+If you want an object's property to always be equal to another object's property you can bind it using the `-bindProperty:toObservered:withKeyPath:` method. This automatically sets up the necessary observers and removes the observer if the source object or destination object is destroyed.
 ```objective-c
 [destinationObject bindProperty:@"stringProperty" toObserved:sourceObject withKeyPath:@"stringProperty"];
 ```
 
+You can also manually remove a binding by calling the `-unbindProperty:` or `-unbindAll` methods.
 If you want to stop the binding do the following:
 ```objective-c
 [destinationObject unbindProperty:@"stringProperty"];
 ```
+
+Transforming Values
+---------
+
+Sometimes you may want to bind a property to the property of a different type. For example, you might want to bind a date property to a string property.
+
+To do this, create a setter on the destination object that takes the source objects property types, convert the object, and then set it on the real property. For example:
+
+```objective-c
+- (void)setDate:(NSDate *)date {
+    self.dateString = date.description;
+}
+```
+
+In the example above you would bind to the "date" key path.
 
 See the spec file for more example usage: specs/BindingSpec.mm
