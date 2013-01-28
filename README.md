@@ -53,3 +53,5 @@ To do this, create a setter on the destination object that takes the source obje
 In the example above you would bind to the "date" key path.
 
 See the spec file for more example usage: specs/BindingSpec.mm
+
+For a description of the implementation please see my [blog post](http://drewag.me/posts/objective-c-bindings?source=github) about it.
