@@ -1,6 +1,9 @@
 //
 //  ObservedBindingReference.m
 //
+//  Created by Andrew J Wagner on 2/10/13.
+//  Copyright (c) 2013 Drewag. All rights reserved.
+//
 
 #import "ObservedBindingReference.h"
 #import "BindingObserver.h"

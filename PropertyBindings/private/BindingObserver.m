@@ -1,6 +1,9 @@
 //
 //  Binding.m
 //
+//  Created by Andrew J Wagner on 2/10/13.
+//  Copyright (c) 2013 Drewag. All rights reserved.
+//
 
 #import "BindingObserver.h"
 #import "NSObject+Binding.h"

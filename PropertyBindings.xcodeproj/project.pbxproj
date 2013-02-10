@@ -73,9 +73,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		494D60F216B5D9250060BA2F /* libbindings.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libbindings.a; path = libPropertyBindings.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		4900053B16C8303C00C9F5F5 /* PropertyBindings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PropertyBindings.h; sourceTree = "<group>"; };
+		494D60F216B5D9250060BA2F /* libPropertyBindings.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPropertyBindings.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		494D60F516B5D9250060BA2F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		494D60F916B5D9250060BA2F /* PropertyBindings-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PropertyBindings-Prefix.pch"; sourceTree = "<group>"; };
+		494D60F916B5D9250060BA2F /* PropertyBindings-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "PropertyBindings-Prefix.pch"; path = "private/PropertyBindings-Prefix.pch"; sourceTree = "<group>"; };
 		494D610516B5DD5A0060BA2F /* BindingObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BindingObserver.h; sourceTree = "<group>"; };
 		494D610616B5DD5A0060BA2F /* BindingObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BindingObserver.m; sourceTree = "<group>"; };
 		494D610716B5DD5A0060BA2F /* NSObject+Binding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Binding.m"; sourceTree = "<group>"; };
@@ -137,7 +138,7 @@
 		494D60F316B5D9250060BA2F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				494D60F216B5D9250060BA2F /* libbindings.a */,
+				494D60F216B5D9250060BA2F /* libPropertyBindings.a */,
 				494D613316B5E0DB0060BA2F /* property-bindings-specs.app */,
 			);
 			name = Products;
@@ -156,6 +157,7 @@
 		494D60F716B5D9250060BA2F /* PropertyBindings */ = {
 			isa = PBXGroup;
 			children = (
+				4900053B16C8303C00C9F5F5 /* PropertyBindings.h */,
 				494D611516B5DD860060BA2F /* NSObject+Binding.h */,
 				498D614016C37645009C38CE /* UITableView+Binding.h */,
 				494D610416B5DD5A0060BA2F /* private */,
@@ -245,7 +247,7 @@
 			);
 			name = PropertyBindings;
 			productName = bindings;
-			productReference = 494D60F216B5D9250060BA2F /* libbindings.a */;
+			productReference = 494D60F216B5D9250060BA2F /* libPropertyBindings.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		494D613216B5E0DB0060BA2F /* property-bindings-specs */ = {
@@ -434,7 +436,7 @@
 			buildSettings = {
 				DSTROOT = /tmp/bindings.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "PropertyBindings/PropertyBindings-Prefix.pch";
+				GCC_PREFIX_HEADER = "PropertyBindings/private/PropertyBindings-Prefix.pch";
 				HEADER_SEARCH_PATHS = "";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -447,7 +449,7 @@
 			buildSettings = {
 				DSTROOT = /tmp/bindings.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "PropertyBindings/PropertyBindings-Prefix.pch";
+				GCC_PREFIX_HEADER = "PropertyBindings/private/PropertyBindings-Prefix.pch";
 				HEADER_SEARCH_PATHS = "";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
