@@ -25,8 +25,8 @@
 		498D615216C381F6009C38CE /* libOCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 498D615116C381D3009C38CE /* libOCMock.a */; };
 		498D615416C38A23009C38CE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 498D615316C38A23009C38CE /* UIKit.framework */; };
 		498D615516C38C9C009C38CE /* UITableView+Binding.m in Sources */ = {isa = PBXBuildFile; fileRef = 498D614116C37645009C38CE /* UITableView+Binding.m */; };
-		498D615816C43C57009C38CE /* BindingArrayObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 498D615716C43C57009C38CE /* BindingArrayObserver.m */; };
-		498D615916C43C57009C38CE /* BindingArrayObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 498D615716C43C57009C38CE /* BindingArrayObserver.m */; };
+		498D615816C43C57009C38CE /* BindingToManyObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 498D615716C43C57009C38CE /* BindingToManyObserver.m */; };
+		498D615916C43C57009C38CE /* BindingToManyObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 498D615716C43C57009C38CE /* BindingToManyObserver.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,8 +96,8 @@
 		498D614316C377DA009C38CE /* UITableViewBindingSpecSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UITableViewBindingSpecSpec.mm; sourceTree = "<group>"; };
 		498D614616C381D2009C38CE /* OCMock.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OCMock.xcodeproj; path = ocmock/Source/OCMock.xcodeproj; sourceTree = "<group>"; };
 		498D615316C38A23009C38CE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		498D615616C43C57009C38CE /* BindingArrayObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BindingArrayObserver.h; sourceTree = "<group>"; };
-		498D615716C43C57009C38CE /* BindingArrayObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BindingArrayObserver.m; sourceTree = "<group>"; };
+		498D615616C43C57009C38CE /* BindingToManyObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BindingToManyObserver.h; sourceTree = "<group>"; };
+		498D615716C43C57009C38CE /* BindingToManyObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BindingToManyObserver.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,8 +183,8 @@
 				494D610716B5DD5A0060BA2F /* NSObject+Binding.m */,
 				494D610816B5DD5A0060BA2F /* ObservedBindingReference.h */,
 				494D610916B5DD5A0060BA2F /* ObservedBindingReference.m */,
-				498D615616C43C57009C38CE /* BindingArrayObserver.h */,
-				498D615716C43C57009C38CE /* BindingArrayObserver.m */,
+				498D615616C43C57009C38CE /* BindingToManyObserver.h */,
+				498D615716C43C57009C38CE /* BindingToManyObserver.m */,
 			);
 			path = private;
 			sourceTree = "<group>";
@@ -345,7 +345,7 @@
 				494D611016B5DD5A0060BA2F /* NSObject+Binding.m in Sources */,
 				494D611116B5DD5A0060BA2F /* ObservedBindingReference.m in Sources */,
 				498D614216C37645009C38CE /* UITableView+Binding.m in Sources */,
-				498D615816C43C57009C38CE /* BindingArrayObserver.m in Sources */,
+				498D615816C43C57009C38CE /* BindingToManyObserver.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -360,7 +360,7 @@
 				494D616216B5E3C40060BA2F /* ObservedBindingReference.m in Sources */,
 				498D614416C377DA009C38CE /* UITableViewBindingSpecSpec.mm in Sources */,
 				498D615516C38C9C009C38CE /* UITableView+Binding.m in Sources */,
-				498D615916C43C57009C38CE /* BindingArrayObserver.m in Sources */,
+				498D615916C43C57009C38CE /* BindingToManyObserver.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

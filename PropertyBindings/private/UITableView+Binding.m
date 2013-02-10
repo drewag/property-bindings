@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Drewag. All rights reserved.
 //
 
-#import "BindingArrayObserver.h"
+#import "BindingToManyObserver.h"
 #import <objc/runtime.h>
 #import "NSObject+Binding.h"
 
@@ -27,7 +27,7 @@ NSString *tableViewBindingObserverProperty = @"TableViewBindingObserver";
     [self unbind];
 
     if (observed) {
-        BindingArrayObserver *bindingObserver = [BindingArrayObserver
+        BindingToManyObserver *bindingObserver = [BindingToManyObserver
             newWithTableView:self
             keyPath:tableViewBindingObserverProperty
             observed:observed

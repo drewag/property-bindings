@@ -10,7 +10,7 @@
 #import <UIKit/UIKit.h>
 #import "UITableView+Binding.h"
 
-@interface BindingArrayObserver : BindingObserver<UITableViewDataSource>
+@interface BindingToManyObserver : BindingObserver<UITableViewDataSource>
 
 + (id)newWithTableView:(UITableView *)tableView
                keyPath:(NSString *)observingKeyPath

@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 Drewag. All rights reserved.
 //
 
-#import "BindingArrayObserver.h"
+#import "BindingToManyObserver.h"
 
-@interface BindingArrayObserver ()
+@interface BindingToManyObserver ()
 
 - (UITableView *)tableView;
 - (NSArray *)sourceArray;
@@ -17,7 +17,7 @@
 
 @end
 
-@implementation BindingArrayObserver
+@implementation BindingToManyObserver
 
 + (id)newWithTableView:(UITableView *)tableView
                keyPath:(NSString *)observingKeyPath
