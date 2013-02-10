@@ -85,6 +85,11 @@
     }
 }
 
+- (void)unbind {
+    self.tableView.dataSource = nil;
+    [super unbind];
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
