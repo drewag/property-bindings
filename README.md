@@ -1,21 +1,27 @@
-bindings
-========
-
 Bindings for Objective-C
 
 The Bindings extension on NSObject provide a mechanism to bind the
 property of one object to the property of another's through KVO.
 
+Integration
+===========
+
+After cloning the repository run "git submodule update --init" from within the root directory of the product.
+
+Add the bindings.xcodeproject to your project and add bindings.a library to your target's "Link Binary With Libraries" build phase.
+
 Usage
---------
+======
+
+Basic Bindings
+--------------
 
 Import the header for the Bindings extension:
 ```objective-c
 #import "bindings/NSObject+Binding.h"
 ```
 
-Basics
----------
+# Basics
 
 The Bindings extension provides the following methods to all NSObjects:
 
@@ -37,8 +43,7 @@ If you want to stop the binding do the following:
 [destinationObject unbindProperty:@"stringProperty"];
 ```
 
-Transforming Values
----------
+# Transforming Values
 
 Sometimes you may want to bind a property to the property of a different type. For example, you might want to bind a date property to a string property.
 
@@ -55,3 +60,32 @@ In the example above you would bind to the "date" key path.
 See the spec file for more example usage: specs/BindingSpec.mm
 
 For a description of the implementation please see my [blog post](http://drewag.me/posts/objective-c-bindings?source=github) about it.
+
+Specialty Bindings
+------------------
+
+# Binding A Table View to an NSArray
+
+Instead of needing to implement a UITableViewDataSource object you can bind a table view directly to an NSArray. The syntax looks like the following:
+
+```objective-c
+[tableView
+    bindToObserved:sourceObject
+    withArrayKeyPath:@"names"
+    cellCreationBlock:^UITableViewCell *(NSString *name) {
+        UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+
+        if (!cell) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            [cell autorelease];
+        }
+
+        cell.textLabel.text = name;
+
+        return cell;
+    }];
+```
+
+The cellCreationBlock will be called every time the table needs a new cell.
+
+**Note:** in order to handle insertions, deletions, and modifications you must ensure that the property triggers granular KVO notifications which an NSArray does not do automatically.
