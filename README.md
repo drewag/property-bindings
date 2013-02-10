@@ -1,4 +1,4 @@
-Bindings for Objective-C
+Property Bindings for Objective-C
 
 The Bindings extension on NSObject provide a mechanism to bind the
 property of one object to the property of another's through KVO.

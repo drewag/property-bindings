@@ -73,18 +73,18 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		494D60F216B5D9250060BA2F /* libbindings.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libbindings.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		494D60F216B5D9250060BA2F /* libbindings.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libbindings.a; path = libPropertyBindings.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		494D60F516B5D9250060BA2F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		494D60F916B5D9250060BA2F /* bindings-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "bindings-Prefix.pch"; sourceTree = "<group>"; };
+		494D60F916B5D9250060BA2F /* PropertyBindings-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PropertyBindings-Prefix.pch"; sourceTree = "<group>"; };
 		494D610516B5DD5A0060BA2F /* BindingObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BindingObserver.h; sourceTree = "<group>"; };
 		494D610616B5DD5A0060BA2F /* BindingObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BindingObserver.m; sourceTree = "<group>"; };
 		494D610716B5DD5A0060BA2F /* NSObject+Binding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Binding.m"; sourceTree = "<group>"; };
 		494D610816B5DD5A0060BA2F /* ObservedBindingReference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObservedBindingReference.h; sourceTree = "<group>"; };
 		494D610916B5DD5A0060BA2F /* ObservedBindingReference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObservedBindingReference.m; sourceTree = "<group>"; };
 		494D611516B5DD860060BA2F /* NSObject+Binding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Binding.h"; sourceTree = "<group>"; };
-		494D613316B5E0DB0060BA2F /* bindings-specs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "bindings-specs.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		494D613316B5E0DB0060BA2F /* property-bindings-specs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "property-bindings-specs.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		494D613716B5E0DB0060BA2F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		494D613B16B5E0DB0060BA2F /* bindings-specs-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "bindings-specs-Info.plist"; sourceTree = "<group>"; };
+		494D613B16B5E0DB0060BA2F /* PropertyBindingsSpecs-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PropertyBindingsSpecs-Info.plist"; sourceTree = "<group>"; };
 		494D613D16B5E0DB0060BA2F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		494D613F16B5E0DB0060BA2F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		494D614116B5E0DB0060BA2F /* bindings-specs-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "bindings-specs-Prefix.pch"; sourceTree = "<group>"; };
@@ -126,10 +126,9 @@
 		494D60E716B5D9250060BA2F = {
 			isa = PBXGroup;
 			children = (
-				498D615316C38A23009C38CE /* UIKit.framework */,
 				498D614516C380A2009C38CE /* vendor */,
-				494D60F716B5D9250060BA2F /* bindings */,
-				494D613916B5E0DB0060BA2F /* bindings-specs */,
+				494D60F716B5D9250060BA2F /* PropertyBindings */,
+				494D613916B5E0DB0060BA2F /* PropertyBindingsSpecs */,
 				494D60F416B5D9250060BA2F /* Frameworks */,
 				494D60F316B5D9250060BA2F /* Products */,
 			);
@@ -139,7 +138,7 @@
 			isa = PBXGroup;
 			children = (
 				494D60F216B5D9250060BA2F /* libbindings.a */,
-				494D613316B5E0DB0060BA2F /* bindings-specs.app */,
+				494D613316B5E0DB0060BA2F /* property-bindings-specs.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -147,13 +146,14 @@
 		494D60F416B5D9250060BA2F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				498D615316C38A23009C38CE /* UIKit.framework */,
 				494D60F516B5D9250060BA2F /* Foundation.framework */,
 				494D613716B5E0DB0060BA2F /* CoreGraphics.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		494D60F716B5D9250060BA2F /* bindings */ = {
+		494D60F716B5D9250060BA2F /* PropertyBindings */ = {
 			isa = PBXGroup;
 			children = (
 				494D611516B5DD860060BA2F /* NSObject+Binding.h */,
@@ -161,13 +161,13 @@
 				494D610416B5DD5A0060BA2F /* private */,
 				494D60F816B5D9250060BA2F /* Supporting Files */,
 			);
-			path = bindings;
+			path = PropertyBindings;
 			sourceTree = "<group>";
 		};
 		494D60F816B5D9250060BA2F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				494D60F916B5D9250060BA2F /* bindings-Prefix.pch */,
+				494D60F916B5D9250060BA2F /* PropertyBindings-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -187,7 +187,7 @@
 			path = private;
 			sourceTree = "<group>";
 		};
-		494D613916B5E0DB0060BA2F /* bindings-specs */ = {
+		494D613916B5E0DB0060BA2F /* PropertyBindingsSpecs */ = {
 			isa = PBXGroup;
 			children = (
 				494D614916B5E18A0060BA2F /* BindingSpec.mm */,
@@ -195,14 +195,14 @@
 				494D613A16B5E0DB0060BA2F /* Supporting Files */,
 				498D614316C377DA009C38CE /* UITableViewBindingSpecSpec.mm */,
 			);
-			name = "bindings-specs";
+			name = PropertyBindingsSpecs;
 			path = specs;
 			sourceTree = "<group>";
 		};
 		494D613A16B5E0DB0060BA2F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				494D613B16B5E0DB0060BA2F /* bindings-specs-Info.plist */,
+				494D613B16B5E0DB0060BA2F /* PropertyBindingsSpecs-Info.plist */,
 				494D613C16B5E0DB0060BA2F /* InfoPlist.strings */,
 				494D613F16B5E0DB0060BA2F /* main.m */,
 				494D614116B5E0DB0060BA2F /* bindings-specs-Prefix.pch */,
@@ -231,9 +231,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		494D60F116B5D9250060BA2F /* bindings */ = {
+		494D60F116B5D9250060BA2F /* PropertyBindings */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 494D610016B5D9250060BA2F /* Build configuration list for PBXNativeTarget "bindings" */;
+			buildConfigurationList = 494D610016B5D9250060BA2F /* Build configuration list for PBXNativeTarget "PropertyBindings" */;
 			buildPhases = (
 				494D60EE16B5D9250060BA2F /* Sources */,
 				494D60EF16B5D9250060BA2F /* Frameworks */,
@@ -243,14 +243,14 @@
 			);
 			dependencies = (
 			);
-			name = bindings;
+			name = PropertyBindings;
 			productName = bindings;
 			productReference = 494D60F216B5D9250060BA2F /* libbindings.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		494D613216B5E0DB0060BA2F /* bindings-specs */ = {
+		494D613216B5E0DB0060BA2F /* property-bindings-specs */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 494D614616B5E0DB0060BA2F /* Build configuration list for PBXNativeTarget "bindings-specs" */;
+			buildConfigurationList = 494D614616B5E0DB0060BA2F /* Build configuration list for PBXNativeTarget "property-bindings-specs" */;
 			buildPhases = (
 				494D612F16B5E0DB0060BA2F /* Sources */,
 				494D613016B5E0DB0060BA2F /* Frameworks */,
@@ -261,9 +261,9 @@
 			dependencies = (
 				494D615F16B5E3190060BA2F /* PBXTargetDependency */,
 			);
-			name = "bindings-specs";
+			name = "property-bindings-specs";
 			productName = "bindings-specs";
-			productReference = 494D613316B5E0DB0060BA2F /* bindings-specs.app */;
+			productReference = 494D613316B5E0DB0060BA2F /* property-bindings-specs.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -275,7 +275,7 @@
 				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = Drewag;
 			};
-			buildConfigurationList = 494D60EC16B5D9250060BA2F /* Build configuration list for PBXProject "bindings" */;
+			buildConfigurationList = 494D60EC16B5D9250060BA2F /* Build configuration list for PBXProject "PropertyBindings" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -293,8 +293,8 @@
 			);
 			projectRoot = "";
 			targets = (
-				494D60F116B5D9250060BA2F /* bindings */,
-				494D613216B5E0DB0060BA2F /* bindings-specs */,
+				494D60F116B5D9250060BA2F /* PropertyBindings */,
+				494D613216B5E0DB0060BA2F /* property-bindings-specs */,
 			);
 		};
 /* End PBXProject section */
@@ -367,7 +367,7 @@
 /* Begin PBXTargetDependency section */
 		494D615F16B5E3190060BA2F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 494D60F116B5D9250060BA2F /* bindings */;
+			target = 494D60F116B5D9250060BA2F /* PropertyBindings */;
 			targetProxy = 494D615E16B5E3190060BA2F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -434,7 +434,7 @@
 			buildSettings = {
 				DSTROOT = /tmp/bindings.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "bindings/bindings-Prefix.pch";
+				GCC_PREFIX_HEADER = "PropertyBindings/PropertyBindings-Prefix.pch";
 				HEADER_SEARCH_PATHS = "";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -447,7 +447,7 @@
 			buildSettings = {
 				DSTROOT = /tmp/bindings.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "bindings/bindings-Prefix.pch";
+				GCC_PREFIX_HEADER = "PropertyBindings/PropertyBindings-Prefix.pch";
 				HEADER_SEARCH_PATHS = "";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -468,7 +468,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "specs/bindings-specs-Prefix.pch";
 				HEADER_SEARCH_PATHS = vendor/ocmock/Source;
-				INFOPLIST_FILE = "$(SRCROOT)/specs/bindings-specs-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/specs/PropertyBindingsSpecs-Info.plist";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
@@ -492,7 +492,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "specs/bindings-specs-Prefix.pch";
 				HEADER_SEARCH_PATHS = vendor/ocmock/Source;
-				INFOPLIST_FILE = "$(SRCROOT)/specs/bindings-specs-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/specs/PropertyBindingsSpecs-Info.plist";
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -507,7 +507,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		494D60EC16B5D9250060BA2F /* Build configuration list for PBXProject "bindings" */ = {
+		494D60EC16B5D9250060BA2F /* Build configuration list for PBXProject "PropertyBindings" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				494D60FE16B5D9250060BA2F /* Debug */,
@@ -516,7 +516,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		494D610016B5D9250060BA2F /* Build configuration list for PBXNativeTarget "bindings" */ = {
+		494D610016B5D9250060BA2F /* Build configuration list for PBXNativeTarget "PropertyBindings" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				494D610116B5D9250060BA2F /* Debug */,
@@ -525,7 +525,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		494D614616B5E0DB0060BA2F /* Build configuration list for PBXNativeTarget "bindings-specs" */ = {
+		494D614616B5E0DB0060BA2F /* Build configuration list for PBXNativeTarget "property-bindings-specs" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				494D614716B5E0DB0060BA2F /* Debug */,
