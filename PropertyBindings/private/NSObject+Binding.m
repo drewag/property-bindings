@@ -8,11 +8,13 @@
 #import "NSObject+Binding.h"
 #import <objc/runtime.h>
 #import "BindingObserver.h"
+#import "ObservedBindingReference.h"
 
 
 @interface NSObject (BindingPrivateMethods)
 
 - (NSMutableDictionary *)bindingObservers;
+- (void)removeAllBindingReferences;
 
 @end
 
@@ -47,13 +49,33 @@ const NSString *bindingObserversKey = @"BindingObservers";
 }
 
 - (void)unbindAll {
-    NSMutableDictionary *bindingObservers = [[self bindingObservers] copy];
+    NSMutableDictionary *bindingObservers = objc_getAssociatedObject(self, &bindingObserversKey);
 
-    for( NSString *keyPath in bindingObservers) {
-        [self unbindProperty:keyPath];
+    for (NSString *keyPath in bindingObservers.allKeys) {
+            [self unbindProperty:keyPath];
     }
+}
 
-    [bindingObservers release];
+#pragma mark - Dealloc decoration
+
++ (void)load {
+    [self decorateDeallocWithUnbindAll];
+}
+
++ (void)decorateDeallocWithUnbindAll {
+    @autoreleasepool {
+        Method dealloc = class_getInstanceMethod([NSObject class], @selector(dealloc));
+        Method deallocWithUnbindAll = class_getInstanceMethod([NSObject class], @selector(deallocWithUnbindAll));
+
+        method_exchangeImplementations(dealloc, deallocWithUnbindAll);
+    }
+}
+
+- (void)deallocWithUnbindAll {
+    [self unbindAll];
+    [self removeAllBindingReferences];
+
+    [self deallocWithUnbindAll];
 }
 
 #pragma mark - Private Methods
@@ -68,6 +90,10 @@ const NSString *bindingObserversKey = @"BindingObservers";
     }
 
     return bindingObservers;
+}
+
+- (void)removeAllBindingReferences {
+    objc_setAssociatedObject(self, &bindingReferencesKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 @end

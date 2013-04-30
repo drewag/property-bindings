@@ -9,6 +9,8 @@
 
 @class ObservedBindingReference;
 
+extern const NSString *bindingReferencesKey;
+
 @interface BindingObserver : NSObject
 
 @property (nonatomic, assign, readonly) NSObject *observing;

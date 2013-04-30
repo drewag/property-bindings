@@ -69,14 +69,15 @@ const NSString *bindingReferencesKey = @"BindingReferences";
 
 - (void)dealloc {
     [self unbind];
-    [_observed release];
 
     [super dealloc];
 }
 
 - (void)unbind {
-    [self stopObserving];
-    [self removeReferenceFromObserved];
+    @synchronized(self) {
+        [self removeReferenceFromObserved];
+        [self stopObserving];
+    }
 }
 
 #pragma mark - KVO
@@ -107,7 +108,7 @@ const NSString *bindingReferencesKey = @"BindingReferences";
 - (void)addReferenceToObserved {
     NSMutableArray *bindingReferences = objc_getAssociatedObject(self.observed, &bindingReferencesKey);
     if (!bindingReferences) {
-        bindingReferences = [[NSMutableArray alloc] init];
+        bindingReferences = [NSMutableArray new];
         objc_setAssociatedObject(self.observed, &bindingReferencesKey, bindingReferences, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
         [bindingReferences release];
     }
