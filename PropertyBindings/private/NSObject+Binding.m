@@ -6,10 +6,10 @@
 //
 
 #import "NSObject+Binding.h"
-#import <objc/runtime.h>
-#import "BindingObserver.h"
-#import "ObservedBindingReference.h"
 
+#import "Binding.h"
+#import "BindingPropertyLink.h"
+#import "BindingManager.h"
 
 @interface NSObject (BindingPrivateMethods)
 
@@ -27,73 +27,23 @@ const NSString *bindingObserversKey = @"BindingObservers";
           toObserved:(NSObject *)observed
          withKeyPath:(NSString *)observedKeyPath
 {
-    [self unbindProperty:observingKeyPath];
-
-    if (observed) {
-        BindingObserver *bindingObserver = [BindingObserver
-            newWithObserving:self
-            keyPath:observingKeyPath
-            observed:observed
-            keyPath:observedKeyPath
-        ];
-        [[self bindingObservers] setObject:bindingObserver forKey:observingKeyPath];
-        [bindingObserver release];
+    if (observed && observedKeyPath) {
+        BindingPropertyLink *binding = [[BindingPropertyLink alloc]
+            initWithObserved:observed
+            atKeyPath:observedKeyPath
+            toDestination:self
+            atKeyPath:observingKeyPath];
+        [[BindingManager sharedInstance] setBinding:binding];
+        [binding release];
     }
 }
 
 - (void)unbindProperty:(NSString *)keyPath {
-    NSMutableDictionary *bindingObservers = [self bindingObservers];
-
-    [[bindingObservers objectForKey:keyPath] unbind];
-    [bindingObservers removeObjectForKey:keyPath];
+    [[BindingManager sharedInstance] removeBindingsAssociatedWithObjects:self keyPath:keyPath];
 }
 
 - (void)unbindAll {
-    NSMutableDictionary *bindingObservers = objc_getAssociatedObject(self, &bindingObserversKey);
-
-    for (NSString *keyPath in bindingObservers.allKeys) {
-            [self unbindProperty:keyPath];
-    }
-}
-
-#pragma mark - Dealloc decoration
-
-+ (void)load {
-    [self decorateDeallocWithUnbindAll];
-}
-
-+ (void)decorateDeallocWithUnbindAll {
-    @autoreleasepool {
-        Method dealloc = class_getInstanceMethod([NSObject class], @selector(dealloc));
-        Method deallocWithUnbindAll = class_getInstanceMethod([NSObject class], @selector(deallocWithUnbindAll));
-
-        method_exchangeImplementations(dealloc, deallocWithUnbindAll);
-    }
-}
-
-- (void)deallocWithUnbindAll {
-    [self unbindAll];
-    [self removeAllBindingReferences];
-
-    [self deallocWithUnbindAll];
-}
-
-#pragma mark - Private Methods
-
-- (NSMutableDictionary *)bindingObservers {
-    NSMutableDictionary *bindingObservers = objc_getAssociatedObject(self, &bindingObserversKey);
-
-    if (!bindingObservers) {
-        bindingObservers = [NSMutableDictionary new];
-        objc_setAssociatedObject(self, &bindingObserversKey, bindingObservers, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-        [bindingObservers release];
-    }
-
-    return bindingObservers;
-}
-
-- (void)removeAllBindingReferences {
-    objc_setAssociatedObject(self, &bindingReferencesKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    [[BindingManager sharedInstance] removeAllBindingsAssociatedWithObject:self];
 }
 
 @end

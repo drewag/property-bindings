@@ -6,9 +6,11 @@
 //  Copyright (c) 2013 Drewag. All rights reserved.
 //
 
-#import "BindingToManyObserver.h"
-#import <objc/runtime.h>
+#import "UITableView+Binding.h"
 #import "NSObject+Binding.h"
+
+#import "BindingTableView.h"
+#import "BindingManager.h"
 
 @interface UITableView (TableviewBindingPrivateMethods)
 
@@ -24,17 +26,14 @@ NSString *tableViewBindingObserverProperty = @"TableViewBindingObserver";
       withArrayKeyPath:(NSString *)observedKeyPath
      cellCreationBlock:(UITableViewCellCreationBlock)creationBlock
 {
-    [self unbind];
-
-    if (observed) {
-        BindingToManyObserver *bindingObserver = [BindingToManyObserver
-            newWithTableView:self
-            keyPath:tableViewBindingObserverProperty
-            observed:observed
-            arrayKeyPath:observedKeyPath
+    if (observed && observedKeyPath) {
+        BindingTableView *binding = [[BindingTableView alloc]
+            initWithObserved:observed
+            atKeyPath:observedKeyPath
+            withTableView:self
             cellCreationBlock:creationBlock];
-        [[self bindingObservers] setObject:bindingObserver forKey:tableViewBindingObserverProperty];
-        [bindingObserver release];
+        [[BindingManager sharedInstance] setBinding:binding];
+        [binding release];
     }
 }
 

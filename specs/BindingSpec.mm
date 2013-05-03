@@ -1,16 +1,15 @@
 #import "NSObject+Binding.h"
 #import <objc/runtime.h>
+#import "BindingManager.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
 
+@interface BindingManager (BindingSpecAccess)
 
-@interface NSObject(BindingsTestAccess)
-
-- (NSDictionary *)bindingObservers;
+@property (nonatomic, strong) NSMutableArray *bindings;
 
 @end
-
 
 @interface SourceObject : NSObject
 
@@ -107,13 +106,25 @@ describe(@"Binding", ^{
             SourceObject *otherSourceObject = [SourceObject new];
             [destinationObject bindProperty:@"stringProperty" toObserved:otherSourceObject withKeyPath:@"stringProperty"];
 
-            NSDictionary *bindings = [destinationObject bindingObservers];
-            expect([bindings count]).to(equal(1));
+            expect([[BindingManager sharedInstance] bindings].count).to(equal(1));
 
             expect(otherSourceObject.retainCount).to(equal(1));
             [otherSourceObject release];
 
-            expect([bindings count]).to(equal(0));
+            expect([[BindingManager sharedInstance] bindings].count).to(equal(0));
+        });
+
+        it(@"should cancel the binding if the destination object is deallocated", ^{
+            SourceObject *otherSourceObject = [SourceObject new];
+            [destinationObject bindProperty:@"stringProperty" toObserved:otherSourceObject withKeyPath:@"stringProperty"];
+
+            expect([[BindingManager sharedInstance] bindings].count).to(equal(1));
+
+            expect(destinationObject.retainCount).to(equal(1));
+            [destinationObject release];
+            destinationObject = nil;
+
+            expect([[BindingManager sharedInstance] bindings].count).to(equal(0));
         });
 
         it(@"should handle nil values", ^{

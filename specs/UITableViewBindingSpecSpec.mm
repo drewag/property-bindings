@@ -30,7 +30,7 @@ describe(@"UITableViewBindingSpec", ^{
 
     beforeEach(^{
         tableView = [[UITableView alloc] init];
-        mockTableView = [OCMockObject partialMockForObject:tableView];
+//        mockTableView = [OCMockObject partialMockForObject:tableView];
         sourceObject = [SourceObjectWithArray new];
         sourceObject.arrayProperty = [NSMutableArray array];
     });

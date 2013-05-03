@@ -1,57 +1,41 @@
 //
-//  BindingArrayObserver.m
-//  bindings
+//  BindingTableView.m
+//  PropertyBindings
 //
-//  Created by Andrew J Wagner on 2/7/13.
+//  Created by Andrew J Wagner on 5/3/13.
 //  Copyright (c) 2013 Drewag. All rights reserved.
 //
 
-#import "BindingToManyObserver.h"
+#import "BindingTableView.h"
 
-@interface BindingToManyObserver ()
+#import "RemoveAllAssociatedBindingsClassAttacher.h"
 
-- (UITableView *)tableView;
-- (NSArray *)sourceArray;
+@interface BindingTableView ()
 
+@property (nonatomic, assign) UITableView *tableView;
 @property (nonatomic, copy) UITableViewCellCreationBlock cellCreationBlock;
+
+- (NSArray *)sourceArray;
 
 @end
 
-@implementation BindingToManyObserver
+@implementation BindingTableView
 
-+ (id)newWithTableView:(UITableView *)tableView
-               keyPath:(NSString *)observingKeyPath
-              observed:(NSObject *)observed
-          arrayKeyPath:(NSString *)observedKeyPath
+- (id)initWithObserved:(id)observed
+             atKeyPath:(NSString *)keyPath
+         withTableView:(UITableView *)tableView
      cellCreationBlock:(UITableViewCellCreationBlock)creationBlock
 {
-    return [[self alloc]
-        initWithTableView:tableView
-        keyPath:observingKeyPath
-        observed:observed
-        arrayKeyPath:observedKeyPath
-        cellCreationBlock:creationBlock];
-}
-
-- (id)initWithTableView:(UITableView *)tableView
-                keyPath:(NSString *)observingKeyPath
-               observed:(NSObject *)observed
-           arrayKeyPath:(NSString *)observedKeyPath
-     cellCreationBlock:(UITableViewCellCreationBlock)creationBlock
-{
-   self = [super
-        initWithObserving:tableView
-        keyPath:observingKeyPath
-        observed:observed
-        keyPath:observedKeyPath];
+    self = [super initWithObserved:observed atKeyPath:keyPath];
     if (self) {
-        tableView.dataSource = self;
+        self.tableView = tableView;
+        self.tableView.dataSource = self;
         self.cellCreationBlock = creationBlock;
     }
     return self;
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+- (void)activateWithChange:(NSDictionary *)change {
     NSNumber *kind = [change objectForKey:NSKeyValueChangeKindKey];
     if ([kind integerValue] == NSKeyValueChangeSetting) {
         [self.tableView reloadData];
@@ -85,9 +69,33 @@
     }
 }
 
-- (void)unbind {
+- (void)confirmBinding {
+    [super confirmBinding];
+
+    [RemoveAllAssociatedBindingsClassAttacher
+        attachRemoveAllAssociatedBindingsToDeallocOfObject:self.tableView];
+}
+
+- (BOOL)shouldRemoveExistingBinding:(BindingTableView *)binding {
+    if (![[binding class] isSubclassOfClass:[BindingTableView class]]) {
+        return NO;
+    }
+
+    return binding.tableView == self.tableView;
+}
+
+- (BOOL)isAssociatedWithObjects:(id)object keyPath:(NSString *)keyPath {
+    if ([super isAssociatedWithObjects:object keyPath:keyPath]) {
+        return YES;
+    }
+
+    return self.tableView == object;
+}
+
+- (void)didUnbind {
+    [super didUnbind];
+
     self.tableView.dataSource = nil;
-    [super unbind];
 }
 
 #pragma mark - UITableViewDataSource
@@ -106,12 +114,8 @@
 
 #pragma mark - Private Methods
 
-- (UITableView *)tableView {
-    return (UITableView *)self.observing;
-}
-
 - (NSArray *)sourceArray {
-    return (NSArray *)[self.observed valueForKey:self.observedKeyPath];
+    return (NSArray *)[self.observedObject valueForKey:self.observedKeyPath];
 }
 
 @end

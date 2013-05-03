@@ -7,10 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4937F347173357DA000E0662 /* BindingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4937F346173357DA000E0662 /* BindingManager.m */; };
+		4937F34D17335967000E0662 /* Binding.m in Sources */ = {isa = PBXBuildFile; fileRef = 4937F34C17335967000E0662 /* Binding.m */; };
+		4937F3501733598C000E0662 /* BindingPropertyLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 4937F34F1733598C000E0662 /* BindingPropertyLink.m */; };
+		4937F35117335F60000E0662 /* BindingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4937F346173357DA000E0662 /* BindingManager.m */; };
+		4937F35217335F64000E0662 /* Binding.m in Sources */ = {isa = PBXBuildFile; fileRef = 4937F34C17335967000E0662 /* Binding.m */; };
+		4937F35317335F67000E0662 /* BindingPropertyLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 4937F34F1733598C000E0662 /* BindingPropertyLink.m */; };
+		4937F35617341803000E0662 /* RemoveAllAssociatedBindingsClassAttacher.m in Sources */ = {isa = PBXBuildFile; fileRef = 4937F35517341803000E0662 /* RemoveAllAssociatedBindingsClassAttacher.m */; };
+		4937F35717341803000E0662 /* RemoveAllAssociatedBindingsClassAttacher.m in Sources */ = {isa = PBXBuildFile; fileRef = 4937F35517341803000E0662 /* RemoveAllAssociatedBindingsClassAttacher.m */; };
+		4937F35A173434BA000E0662 /* BindingTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4937F359173434BA000E0662 /* BindingTableView.m */; };
+		4937F35B173434BA000E0662 /* BindingTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4937F359173434BA000E0662 /* BindingTableView.m */; };
 		494D60F616B5D9250060BA2F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 494D60F516B5D9250060BA2F /* Foundation.framework */; };
-		494D610F16B5DD5A0060BA2F /* BindingObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 494D610616B5DD5A0060BA2F /* BindingObserver.m */; };
 		494D611016B5DD5A0060BA2F /* NSObject+Binding.m in Sources */ = {isa = PBXBuildFile; fileRef = 494D610716B5DD5A0060BA2F /* NSObject+Binding.m */; };
-		494D611116B5DD5A0060BA2F /* ObservedBindingReference.m in Sources */ = {isa = PBXBuildFile; fileRef = 494D610916B5DD5A0060BA2F /* ObservedBindingReference.m */; };
 		494D613616B5E0DB0060BA2F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 494D60F516B5D9250060BA2F /* Foundation.framework */; };
 		494D613816B5E0DB0060BA2F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 494D613716B5E0DB0060BA2F /* CoreGraphics.framework */; };
 		494D613E16B5E0DB0060BA2F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 494D613C16B5E0DB0060BA2F /* InfoPlist.strings */; };
@@ -18,15 +26,11 @@
 		494D614316B5E0DB0060BA2F /* Cedar-iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 494D614216B5E0DB0060BA2F /* Cedar-iOS.framework */; };
 		494D614A16B5E18A0060BA2F /* BindingSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 494D614916B5E18A0060BA2F /* BindingSpec.mm */; };
 		494D616016B5E3B80060BA2F /* NSObject+Binding.m in Sources */ = {isa = PBXBuildFile; fileRef = 494D610716B5DD5A0060BA2F /* NSObject+Binding.m */; };
-		494D616116B5E3C10060BA2F /* BindingObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 494D610616B5DD5A0060BA2F /* BindingObserver.m */; };
-		494D616216B5E3C40060BA2F /* ObservedBindingReference.m in Sources */ = {isa = PBXBuildFile; fileRef = 494D610916B5DD5A0060BA2F /* ObservedBindingReference.m */; };
 		498D614216C37645009C38CE /* UITableView+Binding.m in Sources */ = {isa = PBXBuildFile; fileRef = 498D614116C37645009C38CE /* UITableView+Binding.m */; };
 		498D614416C377DA009C38CE /* UITableViewBindingSpecSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 498D614316C377DA009C38CE /* UITableViewBindingSpecSpec.mm */; };
 		498D615216C381F6009C38CE /* libOCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 498D615116C381D3009C38CE /* libOCMock.a */; };
 		498D615416C38A23009C38CE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 498D615316C38A23009C38CE /* UIKit.framework */; };
 		498D615516C38C9C009C38CE /* UITableView+Binding.m in Sources */ = {isa = PBXBuildFile; fileRef = 498D614116C37645009C38CE /* UITableView+Binding.m */; };
-		498D615816C43C57009C38CE /* BindingToManyObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 498D615716C43C57009C38CE /* BindingToManyObserver.m */; };
-		498D615916C43C57009C38CE /* BindingToManyObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 498D615716C43C57009C38CE /* BindingToManyObserver.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,14 +78,20 @@
 
 /* Begin PBXFileReference section */
 		4900053B16C8303C00C9F5F5 /* PropertyBindings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PropertyBindings.h; sourceTree = "<group>"; };
+		4937F345173357DA000E0662 /* BindingManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BindingManager.h; sourceTree = "<group>"; };
+		4937F346173357DA000E0662 /* BindingManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BindingManager.m; sourceTree = "<group>"; };
+		4937F34B17335967000E0662 /* Binding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Binding.h; sourceTree = "<group>"; };
+		4937F34C17335967000E0662 /* Binding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Binding.m; sourceTree = "<group>"; };
+		4937F34E1733598C000E0662 /* BindingPropertyLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BindingPropertyLink.h; sourceTree = "<group>"; };
+		4937F34F1733598C000E0662 /* BindingPropertyLink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BindingPropertyLink.m; sourceTree = "<group>"; };
+		4937F35417341803000E0662 /* RemoveAllAssociatedBindingsClassAttacher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoveAllAssociatedBindingsClassAttacher.h; sourceTree = "<group>"; };
+		4937F35517341803000E0662 /* RemoveAllAssociatedBindingsClassAttacher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoveAllAssociatedBindingsClassAttacher.m; sourceTree = "<group>"; };
+		4937F358173434BA000E0662 /* BindingTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BindingTableView.h; sourceTree = "<group>"; };
+		4937F359173434BA000E0662 /* BindingTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BindingTableView.m; sourceTree = "<group>"; };
 		494D60F216B5D9250060BA2F /* libPropertyBindings.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPropertyBindings.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		494D60F516B5D9250060BA2F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		494D60F916B5D9250060BA2F /* PropertyBindings-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "PropertyBindings-Prefix.pch"; path = "private/PropertyBindings-Prefix.pch"; sourceTree = "<group>"; };
-		494D610516B5DD5A0060BA2F /* BindingObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BindingObserver.h; sourceTree = "<group>"; };
-		494D610616B5DD5A0060BA2F /* BindingObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BindingObserver.m; sourceTree = "<group>"; };
 		494D610716B5DD5A0060BA2F /* NSObject+Binding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Binding.m"; sourceTree = "<group>"; };
-		494D610816B5DD5A0060BA2F /* ObservedBindingReference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObservedBindingReference.h; sourceTree = "<group>"; };
-		494D610916B5DD5A0060BA2F /* ObservedBindingReference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObservedBindingReference.m; sourceTree = "<group>"; };
 		494D611516B5DD860060BA2F /* NSObject+Binding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Binding.h"; sourceTree = "<group>"; };
 		494D613316B5E0DB0060BA2F /* property-bindings-specs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "property-bindings-specs.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		494D613716B5E0DB0060BA2F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -96,8 +106,6 @@
 		498D614316C377DA009C38CE /* UITableViewBindingSpecSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UITableViewBindingSpecSpec.mm; sourceTree = "<group>"; };
 		498D614616C381D2009C38CE /* OCMock.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OCMock.xcodeproj; path = ocmock/Source/OCMock.xcodeproj; sourceTree = "<group>"; };
 		498D615316C38A23009C38CE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		498D615616C43C57009C38CE /* BindingToManyObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BindingToManyObserver.h; sourceTree = "<group>"; };
-		498D615716C43C57009C38CE /* BindingToManyObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BindingToManyObserver.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,13 +186,17 @@
 			isa = PBXGroup;
 			children = (
 				498D614116C37645009C38CE /* UITableView+Binding.m */,
-				494D610516B5DD5A0060BA2F /* BindingObserver.h */,
-				494D610616B5DD5A0060BA2F /* BindingObserver.m */,
 				494D610716B5DD5A0060BA2F /* NSObject+Binding.m */,
-				494D610816B5DD5A0060BA2F /* ObservedBindingReference.h */,
-				494D610916B5DD5A0060BA2F /* ObservedBindingReference.m */,
-				498D615616C43C57009C38CE /* BindingToManyObserver.h */,
-				498D615716C43C57009C38CE /* BindingToManyObserver.m */,
+				4937F345173357DA000E0662 /* BindingManager.h */,
+				4937F346173357DA000E0662 /* BindingManager.m */,
+				4937F34B17335967000E0662 /* Binding.h */,
+				4937F34C17335967000E0662 /* Binding.m */,
+				4937F34E1733598C000E0662 /* BindingPropertyLink.h */,
+				4937F34F1733598C000E0662 /* BindingPropertyLink.m */,
+				4937F35417341803000E0662 /* RemoveAllAssociatedBindingsClassAttacher.h */,
+				4937F35517341803000E0662 /* RemoveAllAssociatedBindingsClassAttacher.m */,
+				4937F358173434BA000E0662 /* BindingTableView.h */,
+				4937F359173434BA000E0662 /* BindingTableView.m */,
 			);
 			path = private;
 			sourceTree = "<group>";
@@ -341,11 +353,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				494D610F16B5DD5A0060BA2F /* BindingObserver.m in Sources */,
 				494D611016B5DD5A0060BA2F /* NSObject+Binding.m in Sources */,
-				494D611116B5DD5A0060BA2F /* ObservedBindingReference.m in Sources */,
 				498D614216C37645009C38CE /* UITableView+Binding.m in Sources */,
-				498D615816C43C57009C38CE /* BindingToManyObserver.m in Sources */,
+				4937F347173357DA000E0662 /* BindingManager.m in Sources */,
+				4937F34D17335967000E0662 /* Binding.m in Sources */,
+				4937F3501733598C000E0662 /* BindingPropertyLink.m in Sources */,
+				4937F35617341803000E0662 /* RemoveAllAssociatedBindingsClassAttacher.m in Sources */,
+				4937F35A173434BA000E0662 /* BindingTableView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -356,11 +370,13 @@
 				494D614016B5E0DB0060BA2F /* main.m in Sources */,
 				494D614A16B5E18A0060BA2F /* BindingSpec.mm in Sources */,
 				494D616016B5E3B80060BA2F /* NSObject+Binding.m in Sources */,
-				494D616116B5E3C10060BA2F /* BindingObserver.m in Sources */,
-				494D616216B5E3C40060BA2F /* ObservedBindingReference.m in Sources */,
 				498D614416C377DA009C38CE /* UITableViewBindingSpecSpec.mm in Sources */,
 				498D615516C38C9C009C38CE /* UITableView+Binding.m in Sources */,
-				498D615916C43C57009C38CE /* BindingToManyObserver.m in Sources */,
+				4937F35117335F60000E0662 /* BindingManager.m in Sources */,
+				4937F35217335F64000E0662 /* Binding.m in Sources */,
+				4937F35317335F67000E0662 /* BindingPropertyLink.m in Sources */,
+				4937F35717341803000E0662 /* RemoveAllAssociatedBindingsClassAttacher.m in Sources */,
+				4937F35B173434BA000E0662 /* BindingTableView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
