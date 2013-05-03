@@ -17,6 +17,7 @@
 
 + (void)patchKVOObjectClass:(Class)objectClass;
 + (void)createSubclassForObject:(id)object;
++ (BOOL)classAlreadyModified:(Class)class;
 
 - (BOOL)willRemoveAssociatedBindings;
 - (void)deallocWithRemoveAllAssociatedBindings;
@@ -54,7 +55,7 @@ static void PrintDescription(NSString *name, id obj) {
 + (void)attachRemoveAllAssociatedBindingsToDeallocOfObject:(id)object {
     Class objectClass = object_getClass(object);
 
-    if (class_getInstanceMethod(objectClass, @selector(__willRemoveAssociatedBindings))) {
+    if ([self classAlreadyModified:objectClass]) {
         return;
     }
 
@@ -100,7 +101,7 @@ static void KVOSubclassDealloc(id self, SEL _cmd) {
     [[BindingManager sharedInstance] removeAllBindingsAssociatedWithObject:self];
     
     Class class = object_getClass(self);
-    if (class_getInstanceMethod(class, @selector(__willRemoveAssociatedBindings))) {
+    if ([RemoveAllAssociatedBindingsClassAttacher classAlreadyModified:class]) {
         IMP originalDealloc = class_getMethodImplementation(class, @selector(PropertyBindings_KVO_original_dealloc));
         ((void (*)(id, SEL))originalDealloc)(self, _cmd);
     }
@@ -126,6 +127,20 @@ static void KVOSubclassRemoveObserverForKeyPathContext(id self, SEL _cmd, id obs
 }
 
 #pragma mark - Private Methods
+
++ (BOOL)classAlreadyModified:(Class)class {
+    return class_getInstanceMethod(class, @selector(__willRemoveAssociatedBindings));
+}
+
++ (void)addRemoveMethodToClass:(Class)class {
+    Method willRemoveMethod = class_getInstanceMethod([self class], @selector(willRemoveAssociatedBindings));
+    class_addMethod(
+        class,
+        @selector(__willRemoveAssociatedBindings),
+        method_getImplementation(willRemoveMethod),
+        method_getTypeEncoding(willRemoveMethod)
+    );
+}
 
 + (void)patchKVOObjectClass:(Class)objectClass {
 //    PrintDescription(@"Before", object);
@@ -185,13 +200,7 @@ static void KVOSubclassRemoveObserverForKeyPathContext(id self, SEL _cmd, id obs
         method_getTypeEncoding(dealloc)
     );
 
-    Method willRemoveMethod = class_getInstanceMethod([self class], @selector(willRemoveAssociatedBindings));
-    class_addMethod(
-        objectClass,
-        @selector(__willRemoveAssociatedBindings),
-        method_getImplementation(willRemoveMethod),
-        method_getTypeEncoding(willRemoveMethod)
-    );
+    [self addRemoveMethodToClass:objectClass];
 
 //    PrintDescription(@"After", object);
 }
@@ -209,6 +218,7 @@ static void KVOSubclassRemoveObserverForKeyPathContext(id self, SEL _cmd, id obs
         if (subclass) {
             Method dealloc = class_getInstanceMethod(self, @selector(deallocWithRemoveAllAssociatedBindings));
             class_addMethod(subclass, @selector(dealloc), method_getImplementation(dealloc), method_getTypeEncoding(dealloc));
+            [self addRemoveMethodToClass:subclass];
             objc_registerClassPair(subclass);
         }
     }

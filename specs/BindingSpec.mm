@@ -1,5 +1,6 @@
 #import "NSObject+Binding.h"
 #import <objc/runtime.h>
+#import <OCMock/OCMock.h>
 #import "BindingManager.h"
 
 using namespace Cedar::Matchers;
@@ -34,6 +35,7 @@ using namespace Cedar::Doubles;
 
 @property (nonatomic) NSInteger numberProperty;
 @property (strong, nonatomic) NSString *stringProperty;
+@property (strong, nonatomic) NSString *stringProperty2;
 
 @end
 
@@ -42,6 +44,7 @@ using namespace Cedar::Doubles;
 
 - (void)dealloc {
     [_stringProperty release];
+    [_stringProperty2 release];
 
     [super dealloc];
 }
@@ -125,6 +128,28 @@ describe(@"Binding", ^{
             destinationObject = nil;
 
             expect([[BindingManager sharedInstance] bindings].count).to(equal(0));
+        });
+
+        it(@"should cancel the binding only once if the destination object that is bounds twice is deallocated", ^{
+            SourceObject *otherSourceObject = [SourceObject new];
+            [destinationObject bindProperty:@"stringProperty" toObserved:otherSourceObject withKeyPath:@"stringProperty"];
+            [destinationObject bindProperty:@"stringProperty2" toObserved:otherSourceObject withKeyPath:@"stringProperty"];
+
+            expect([[BindingManager sharedInstance] bindings].count).to(equal(2));
+
+            id mockBindingManager = [OCMockObject partialMockForObject:[BindingManager sharedInstance]];
+
+            [[mockBindingManager expect] removeAllBindingsAssociatedWithObject:[OCMArg any]];
+            [[mockBindingManager reject] removeAllBindingsAssociatedWithObject:[OCMArg any]];
+
+            expect(destinationObject.retainCount).to(equal(1));
+            expect(^{
+                [destinationObject release];
+            }).to_not(raise_exception());
+
+            destinationObject = nil;
+
+            expect(^{ [mockBindingManager verify]; }).to_not(raise_exception());
         });
 
         it(@"should handle nil values", ^{
