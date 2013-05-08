@@ -12,12 +12,6 @@
 #import "BindingTableView.h"
 #import "BindingManager.h"
 
-@interface UITableView (TableviewBindingPrivateMethods)
-
-- (NSMutableDictionary *)bindingObservers;
-
-@end
-
 @implementation UITableView (Binding)
 
 NSString *tableViewBindingObserverProperty = @"TableViewBindingObserver";

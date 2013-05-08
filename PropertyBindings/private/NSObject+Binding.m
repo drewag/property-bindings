@@ -11,17 +11,7 @@
 #import "BindingPropertyLink.h"
 #import "BindingManager.h"
 
-@interface NSObject (BindingPrivateMethods)
-
-- (NSMutableDictionary *)bindingObservers;
-- (void)removeAllBindingReferences;
-
-@end
-
-
 @implementation NSObject (Binding)
-
-const NSString *bindingObserversKey = @"BindingObservers";
 
 - (void)bindProperty:(NSString *)observingKeyPath
           toObserved:(NSObject *)observed

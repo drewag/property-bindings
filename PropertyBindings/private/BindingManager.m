@@ -25,7 +25,7 @@
     dispatch_once(&pred, ^{
         singleton = [BindingManager new];
     });
- 
+
     return singleton;
 }
 
@@ -55,10 +55,12 @@
         }
         return shouldRemove;
     }];
-    if (index != NSNotFound) {
-        [self.bindings removeObjectAtIndex:index];
+    @synchronized(self.bindings) {
+        if (index != NSNotFound) {
+            [self.bindings removeObjectAtIndex:index];
+        }
+        [self.bindings addObject:binding];
     }
-    [self.bindings addObject:binding];
 
     [binding.observedObject
         addObserver:self
@@ -69,24 +71,44 @@
     [binding confirmBinding];
 }
 
+- (void)removeAllBindings {
+    @synchronized(self.bindings) {
+        for (Binding *binding in self.bindings) {
+            [binding.observedObject
+                removeObserver:self
+                 forKeyPath:binding.observedKeyPath
+                 context:binding];
+            [binding didUnbind];
+        }
+        [self.bindings removeAllObjects];
+    }
+}
+
 - (void)removeAllBindingsAssociatedWithObject:(id)object {
     [self removeBindingsAssociatedWithObjects:object keyPath:nil];
 }
 
 - (void)removeBindingsAssociatedWithObjects:(id)object keyPath:(NSString *)keyPath {
-    NSIndexSet *toBeRemoved = [self.bindings indexesOfObjectsPassingTest:^BOOL(Binding *binding, NSUInteger idx, BOOL *stop) {
-        BOOL isAssociated = [binding isAssociatedWithObjects:object keyPath:keyPath];
-        if (isAssociated)  {
-            [binding.observedObject
-                removeObserver:self
-                forKeyPath:binding.observedKeyPath
-                context:binding];
-            [binding didUnbind];
-        }
-        return isAssociated;
-    }];
+    @synchronized(self.bindings) {
+        NSIndexSet *toBeRemoved = [self.bindings indexesOfObjectsPassingTest:^BOOL(Binding *binding, NSUInteger idx, BOOL *stop) {
+            BOOL isAssociated = [binding isAssociatedWithObjects:object keyPath:keyPath];
+            if (isAssociated)  {
+                @try {
+                    [binding.observedObject
+                        removeObserver:self
+                        forKeyPath:binding.observedKeyPath
+                        context:binding];
+                }
+                @catch (NSException *exception) {
+                    NSLog(@"Failed to Remove Observer: %@", exception);
+                }
+                [binding didUnbind];
+            }
+            return isAssociated;
+        }];
 
-    [self.bindings removeObjectsAtIndexes:toBeRemoved];
+        [self.bindings removeObjectsAtIndexes:toBeRemoved];
+    }
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {

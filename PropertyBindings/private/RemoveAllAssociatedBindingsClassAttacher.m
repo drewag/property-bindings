@@ -28,14 +28,14 @@
 
 static NSArray *ClassMethodNames(Class c) {
     NSMutableArray *array = [NSMutableArray array];
-    
+
     unsigned int methodCount = 0;
     Method *methodList = class_copyMethodList(c, &methodCount);
     unsigned int i;
     for(i = 0; i < methodCount; i++)
         [array addObject: NSStringFromSelector(method_getName(methodList[i]))];
     free(methodList);
-    
+
     return array;
 }
 
@@ -83,10 +83,18 @@ static void WhileLocked(void (^block)(void)) {
 
 #pragma mark - Swizzle Methods
 
+static const NSString *ClassAssociatedObjectKey = @"ClassAssociatedObject";
+
 - (void)deallocWithRemoveAllAssociatedBindings {
     [[BindingManager sharedInstance] removeAllBindingsAssociatedWithObject:self];
+    WhileLocked(^{
+        IMP superImp = method_getImplementation(class_getInstanceMethod(class_getSuperclass(object_getClass(self)), @selector(dealloc)));
+        ((void (*)(id, SEL))superImp)(self, _cmd);
+    });
+}
 
-    [super dealloc];
+- (Class)classForHiddenClassObject {
+    return objc_getAssociatedObject(self, &ClassAssociatedObjectKey);
 }
 
 static void KVOSubclassRelease(id self, SEL _cmd) {
@@ -99,7 +107,7 @@ static void KVOSubclassRelease(id self, SEL _cmd) {
 static void KVOSubclassDealloc(id self, SEL _cmd) {
 //    PrintDescription(@"In Dealloc", self);
     [[BindingManager sharedInstance] removeAllBindingsAssociatedWithObject:self];
-    
+
     Class class = object_getClass(self);
     if ([RemoveAllAssociatedBindingsClassAttacher classAlreadyModified:class]) {
         IMP originalDealloc = class_getMethodImplementation(class, @selector(PropertyBindings_KVO_original_dealloc));
@@ -218,12 +226,17 @@ static void KVOSubclassRemoveObserverForKeyPathContext(id self, SEL _cmd, id obs
         if (subclass) {
             Method dealloc = class_getInstanceMethod(self, @selector(deallocWithRemoveAllAssociatedBindings));
             class_addMethod(subclass, @selector(dealloc), method_getImplementation(dealloc), method_getTypeEncoding(dealloc));
+
+            Method classMethod = class_getInstanceMethod(self, @selector(classForHiddenClassObject));
+            class_addMethod(subclass, @selector(class), method_getImplementation(classMethod), method_getTypeEncoding(classMethod));
+
             [self addRemoveMethodToClass:subclass];
             objc_registerClassPair(subclass);
         }
     }
 
     if (!!subclass) {
+        objc_setAssociatedObject(object, &ClassAssociatedObjectKey, objectClass, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
         object_setClass(object, subclass);
     }
 //    PrintDescription(@"After", object);

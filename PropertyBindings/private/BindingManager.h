@@ -15,6 +15,7 @@
 + (id)sharedInstance;
 
 - (void)setBinding:(Binding *)binding;
+- (void)removeAllBindings;
 - (void)removeAllBindingsAssociatedWithObject:(id)object;
 - (void)removeBindingsAssociatedWithObjects:(id)object keyPath:(NSString *)keyPath;
 

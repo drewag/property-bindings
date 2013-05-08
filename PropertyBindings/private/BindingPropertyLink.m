@@ -21,15 +21,23 @@
 
 - (id)initWithObserved:(id)observed
              atKeyPath:(NSString *)observedKeyPath
-         toDestination:(id)destionation
+         toDestination:(id)destination
              atKeyPath:(NSString *)destinationKeyPath
 {
     self = [super initWithObserved:observed atKeyPath:observedKeyPath];
     if (self) {
-        self.destinationObject = destionation;
+        self.destinationObject = destination;
         self.destinationKeyPath = destinationKeyPath;
     }
     return self;
+}
+
+- (NSString *)description {
+    return [NSString stringWithFormat:@"%@.%@ -> %@.%@",
+        self.destinationObject,
+        self.destinationKeyPath,
+        self.observedObject,
+        self.observedKeyPath];
 }
 
 - (void)confirmBinding {

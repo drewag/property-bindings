@@ -12,7 +12,7 @@ using namespace Cedar::Doubles;
 
 @end
 
-@interface SourceObject : NSObject
+@interface SourceObject : UIView
 
 @property (nonatomic) NSInteger numberProperty;
 @property (strong, nonatomic) NSString *stringProperty;
@@ -41,6 +41,32 @@ using namespace Cedar::Doubles;
 
 
 @implementation DestinationObject
+
+- (void)dealloc {
+    [_stringProperty release];
+    [_stringProperty2 release];
+
+    [super dealloc];
+}
+
+@end
+
+@interface BindToSelfOnInitObject : NSObject
+
+@property (strong, nonatomic) NSString *stringProperty;
+@property (strong, nonatomic) NSString *stringProperty2;
+
+@end
+
+@implementation BindToSelfOnInitObject
+
+- (id)init {
+    self = [super init];
+    if (self) {
+        [self bindProperty:@"stringProperty2" toObserved:self withKeyPath:@"stringProperty"];
+    }
+    return self;
+}
 
 - (void)dealloc {
     [_stringProperty release];
@@ -156,6 +182,50 @@ describe(@"Binding", ^{
             sourceObject.stringProperty = nil;
             [destinationObject bindProperty:@"stringProperty" toObserved:sourceObject withKeyPath:@"stringProperty"];
             expect(destinationObject.stringProperty).to(be_nil());
+        });
+
+        it(@"should be able to bind two properties of the same object", ^{
+            [destinationObject bindProperty:@"stringProperty2" toObserved:destinationObject withKeyPath:@"stringProperty"];
+            destinationObject.stringProperty = @"Hello";
+            expect(destinationObject.stringProperty2).to(equal(@"Hello"));
+        });
+
+        it(@"should work with view controllers", ^{
+            sourceObject = [SourceObject new];
+            UIViewController *controller1 = [UIViewController new];
+            expect(controller1.view).to_not(be_nil());
+            [controller1.view addSubview:sourceObject];
+            [controller1 bindProperty:@"title" toObserved:sourceObject withKeyPath:@"stringProperty"];
+            sourceObject.stringProperty = @"My Title";
+            expect(controller1.title).to(equal(@"My Title"));;
+            [controller1 release];
+            [sourceObject release];
+
+            sourceObject = [SourceObject new];
+            UIViewController *controller2 = [UIViewController new];
+            expect(controller2.view).to_not(be_nil());
+            [controller2.view addSubview:sourceObject];
+            [controller2 bindProperty:@"title" toObserved:sourceObject withKeyPath:@"stringProperty"];
+            sourceObject.stringProperty = @"My Title";
+            expect(controller2.title).to(equal(@"My Title"));;
+            [controller2 release];
+            [sourceObject release];
+
+            sourceObject = [SourceObject new];
+            UIViewController *controller3 = [UIViewController new];
+            expect(controller3.view).to_not(be_nil());
+            [controller3.view addSubview:sourceObject];
+            [controller3 bindProperty:@"title" toObserved:sourceObject withKeyPath:@"stringProperty"];
+            sourceObject.stringProperty = @"My Title";
+            expect(controller3.title).to(equal(@"My Title"));;
+            [controller3 release];
+            [sourceObject release];
+        });
+
+        it(@"should work when binding in initialization", ^{
+            BindToSelfOnInitObject *object = [BindToSelfOnInitObject new];
+            object.stringProperty = @"A String";object.stringProperty = @"A String";object.stringProperty = @"A String";
+            expect(object.stringProperty2).to(equal(@"A String"));
         });
     });
 
