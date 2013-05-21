@@ -9,6 +9,7 @@
 
 #import "Binding.h"
 #import "BindingPropertyLink.h"
+#import "BindingBlock.h"
 #import "BindingManager.h"
 
 @implementation NSObject (Binding)
@@ -23,6 +24,17 @@
             atKeyPath:observedKeyPath
             toDestination:self
             atKeyPath:observingKeyPath];
+        [[BindingManager sharedInstance] setBinding:binding];
+        [binding release];
+    }
+}
+
+- (void)bindBlock:(void(^)(id newValue))block toProperty:(NSString *)property {
+    if (property && block) {
+        BindingBlock *binding = [[BindingBlock alloc]
+            initWithObserved:self
+            atKeyPath:property
+            toBlock:block];
         [[BindingManager sharedInstance] setBinding:binding];
         [binding release];
     }

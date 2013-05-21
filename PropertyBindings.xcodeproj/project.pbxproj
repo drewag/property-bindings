@@ -31,6 +31,8 @@
 		498D615216C381F6009C38CE /* libOCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 498D615116C381D3009C38CE /* libOCMock.a */; };
 		498D615416C38A23009C38CE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 498D615316C38A23009C38CE /* UIKit.framework */; };
 		498D615516C38C9C009C38CE /* UITableView+Binding.m in Sources */ = {isa = PBXBuildFile; fileRef = 498D614116C37645009C38CE /* UITableView+Binding.m */; };
+		4998CDD2174BCA2400B72160 /* BindingBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 4998CDD1174BCA2400B72160 /* BindingBlock.m */; };
+		4998CDD3174BCA2400B72160 /* BindingBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 4998CDD1174BCA2400B72160 /* BindingBlock.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,6 +108,8 @@
 		498D614316C377DA009C38CE /* UITableViewBindingSpecSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UITableViewBindingSpecSpec.mm; sourceTree = "<group>"; };
 		498D614616C381D2009C38CE /* OCMock.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OCMock.xcodeproj; path = ocmock/Source/OCMock.xcodeproj; sourceTree = "<group>"; };
 		498D615316C38A23009C38CE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		4998CDD0174BCA2400B72160 /* BindingBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BindingBlock.h; sourceTree = "<group>"; };
+		4998CDD1174BCA2400B72160 /* BindingBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BindingBlock.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -197,6 +201,8 @@
 				4937F35517341803000E0662 /* RemoveAllAssociatedBindingsClassAttacher.m */,
 				4937F358173434BA000E0662 /* BindingTableView.h */,
 				4937F359173434BA000E0662 /* BindingTableView.m */,
+				4998CDD0174BCA2400B72160 /* BindingBlock.h */,
+				4998CDD1174BCA2400B72160 /* BindingBlock.m */,
 			);
 			path = private;
 			sourceTree = "<group>";
@@ -360,6 +366,7 @@
 				4937F3501733598C000E0662 /* BindingPropertyLink.m in Sources */,
 				4937F35617341803000E0662 /* RemoveAllAssociatedBindingsClassAttacher.m in Sources */,
 				4937F35A173434BA000E0662 /* BindingTableView.m in Sources */,
+				4998CDD2174BCA2400B72160 /* BindingBlock.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -377,6 +384,7 @@
 				4937F35317335F67000E0662 /* BindingPropertyLink.m in Sources */,
 				4937F35717341803000E0662 /* RemoveAllAssociatedBindingsClassAttacher.m in Sources */,
 				4937F35B173434BA000E0662 /* BindingTableView.m in Sources */,
+				4998CDD3174BCA2400B72160 /* BindingBlock.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -47,14 +47,14 @@
 - (void)activateWithChange:(NSDictionary *)change {
     @throw [NSException
         exceptionWithName:@"Unimplimented Method"
-        reason:@"You must use a subclass that overrides thie method"
+        reason:@"You must use a subclass that overrides this method"
         userInfo:nil];
 }
 
 - (BOOL)shouldRemoveExistingBinding:(Binding *)binding {
     @throw [NSException
         exceptionWithName:@"Unimplimented Method"
-        reason:@"You must use a subclass that overrides thie method"
+        reason:@"You must use a subclass that overrides this method"
         userInfo:nil];
 }
 

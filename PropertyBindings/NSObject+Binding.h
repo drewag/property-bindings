@@ -17,4 +17,6 @@
 - (void)unbindProperty:(NSString *)keyPath;
 - (void)unbindAll;
 
+- (void)bindBlock:(void(^)(id newValue))block toProperty:(NSString *)property;
+
 @end

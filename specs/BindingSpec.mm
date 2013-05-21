@@ -229,6 +229,49 @@ describe(@"Binding", ^{
         });
     });
 
+    describe(@"-bindBlock:ToProperty:", ^{
+        it(@"should call the block with the new property", ^{
+            __block id capturedValue = @"Before";
+            
+            [sourceObject bindBlock:^(id newValue) {
+                capturedValue = newValue;
+            } toProperty:@"stringProperty"];
+
+            expect(capturedValue).to(be_nil());
+            sourceObject.stringProperty = @"A test string";
+            expect(capturedValue).to(equal(@"A test string"));
+
+            [sourceObject unbindProperty:@"stringProperty"];
+            sourceObject.stringProperty = @"Other";
+            expect(capturedValue).to(equal(@"A test string"));
+        });
+
+        it(@"should handle number properties", ^{
+            __block NSInteger capturedNumber = 10;
+            
+            [sourceObject bindBlock:^(id newValue) {
+                capturedNumber = [newValue integerValue];
+            } toProperty:@"numberProperty"];
+
+            expect(capturedNumber).to(equal(0));
+            sourceObject.numberProperty = 7;
+            expect(capturedNumber).to(equal(7));
+        });
+
+        it(@"should handle nil values", ^{
+            __block id capturedValue = nil;
+            sourceObject.stringProperty = @"Before";
+            
+            [sourceObject bindBlock:^(id newValue) {
+                capturedValue = newValue;
+            } toProperty:@"stringProperty"];
+
+            expect(capturedValue).to(equal(@"Before"));
+            sourceObject.stringProperty = nil;
+            expect(capturedValue).to(be_nil());
+        });
+    });
+
     describe(@"-unbindProperty:", ^{
         it(@"should stop updating destination object based on source object", ^{
             sourceObject.stringProperty = @"Original String";
@@ -238,6 +281,18 @@ describe(@"Binding", ^{
 
             sourceObject.stringProperty = @"Test String";
             expect(destinationObject.stringProperty).to(equal(@"Original String"));
+        });
+
+        it(@"should stop calling the block based on source object", ^{
+            __block id capturedValue = @"Before";
+            
+            [sourceObject bindBlock:^(id newValue) {
+                capturedValue = newValue;
+            } toProperty:@"stringProperty"];
+            [sourceObject unbindProperty:@"stringProperty"];
+
+            sourceObject.stringProperty = @"new";
+            expect(capturedValue).to(be_nil());
         });
     });
 
