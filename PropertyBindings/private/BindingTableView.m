@@ -14,6 +14,7 @@
 
 @property (nonatomic, assign) UITableView *tableView;
 @property (nonatomic, copy) UITableViewCellCreationBlock cellCreationBlock;
+@property (nonatomic, copy) UITableViewCommitEditingStyleBlock commitEditingStyleBlock;
 
 - (NSArray *)sourceArray;
 
@@ -25,14 +26,23 @@
              atKeyPath:(NSString *)keyPath
          withTableView:(UITableView *)tableView
      cellCreationBlock:(UITableViewCellCreationBlock)creationBlock
+commitEditingStyleBlock:(UITableViewCommitEditingStyleBlock)editingBlock
 {
     self = [super initWithObserved:observed atKeyPath:keyPath];
     if (self) {
         self.tableView = tableView;
         self.tableView.dataSource = self;
         self.cellCreationBlock = creationBlock;
+        self.commitEditingStyleBlock = editingBlock;
     }
     return self;
+}
+
+- (void)dealloc {
+    [_cellCreationBlock release];
+    [_commitEditingStyleBlock release];
+
+    [super dealloc];
 }
 
 - (void)activateWithChange:(NSDictionary *)change {
@@ -110,6 +120,17 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     return self.cellCreationBlock([self sourceArray][indexPath.row]);
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.commitEditingStyleBlock) {
+        return YES;
+    }
+    return NO;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    self.commitEditingStyleBlock(editingStyle, indexPath);
 }
 
 #pragma mark - Private Methods

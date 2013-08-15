@@ -188,6 +188,25 @@ describe(@"UITableViewBindingSpec", ^{
             NSIndexPath *path = [NSIndexPath indexPathForRow:0 inSection:0];
             expect([tableView.dataSource tableView:tableView cellForRowAtIndexPath:path]).to(be_same_instance_as(cell));
         });
+
+        it(@"should call the commit editing style callback", ^{
+            NSIndexPath *expectedIndexPath = [NSIndexPath indexPathForRow:1 inSection:3];
+
+            __block BOOL callbackCalled = NO;
+            [tableView bindToObserved:sourceObject withArrayKeyPath:@"arrayProperty" cellCreationBlock:nil commitEditingStyleBlock:^(UITableViewCellEditingStyle style, NSIndexPath *indexPath) {
+                callbackCalled = YES;
+                expect(style).to(equal(UITableViewCellEditingStyleInsert));
+                expect(indexPath).to(be_same_instance_as(expectedIndexPath));
+            }];
+
+            [tableView.dataSource
+                tableView:nil
+                commitEditingStyle:UITableViewCellEditingStyleInsert
+                forRowAtIndexPath:expectedIndexPath
+            ];
+
+            expect(callbackCalled).to(equal(YES));
+        });
     });
 });
 

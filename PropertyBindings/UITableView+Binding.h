@@ -11,9 +11,15 @@
 @interface UITableView (Binding)
 
 typedef UITableViewCell *(^UITableViewCellCreationBlock)(id object);
+typedef void(^UITableViewCommitEditingStyleBlock)(UITableViewCellEditingStyle style, NSIndexPath *indexPath);
 - (void)bindToObserved:(NSObject *)observed
       withArrayKeyPath:(NSString *)observedKeyPath
      cellCreationBlock:(UITableViewCellCreationBlock)creationBlock;
+
+- (void)bindToObserved:(NSObject *)observed
+      withArrayKeyPath:(NSString *)observedKeyPath
+     cellCreationBlock:(UITableViewCellCreationBlock)creationBlock
+commitEditingStyleBlock:(UITableViewCommitEditingStyleBlock)editingBlock;
 
 - (void)unbind;
 

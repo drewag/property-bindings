@@ -20,12 +20,26 @@ NSString *tableViewBindingObserverProperty = @"TableViewBindingObserver";
       withArrayKeyPath:(NSString *)observedKeyPath
      cellCreationBlock:(UITableViewCellCreationBlock)creationBlock
 {
+    return [self
+        bindToObserved:observed
+        withArrayKeyPath:observedKeyPath
+        cellCreationBlock:creationBlock
+        commitEditingStyleBlock:nil
+    ];
+}
+
+- (void)bindToObserved:(NSObject *)observed
+      withArrayKeyPath:(NSString *)observedKeyPath
+     cellCreationBlock:(UITableViewCellCreationBlock)creationBlock
+commitEditingStyleBlock:(UITableViewCommitEditingStyleBlock)editingBlock
+{
     if (observed && observedKeyPath) {
         BindingTableView *binding = [[BindingTableView alloc]
             initWithObserved:observed
             atKeyPath:observedKeyPath
             withTableView:self
-            cellCreationBlock:creationBlock];
+            cellCreationBlock:creationBlock
+            commitEditingStyleBlock:editingBlock];
         [[BindingManager sharedInstance] setBinding:binding];
         [binding release];
     }

@@ -16,6 +16,7 @@
 - (id)initWithObserved:(id)observed
              atKeyPath:(NSString *)keyPath
          withTableView:(UITableView *)tableView
-     cellCreationBlock:(UITableViewCellCreationBlock)creationBlock;
+     cellCreationBlock:(UITableViewCellCreationBlock)creationBlock
+commitEditingStyleBlock:(UITableViewCommitEditingStyleBlock)editingBlock;
 
 @end
