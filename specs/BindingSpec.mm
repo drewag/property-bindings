@@ -16,6 +16,7 @@ using namespace Cedar::Doubles;
 
 @property (nonatomic) NSInteger numberProperty;
 @property (strong, nonatomic) NSString *stringProperty;
+@property (strong, nonatomic) NSArray *arrayProperty;
 
 @end
 
@@ -24,6 +25,7 @@ using namespace Cedar::Doubles;
 
 - (void)dealloc {
     [_stringProperty release];
+    [_arrayProperty release];
 
     [super dealloc];
 }
@@ -36,6 +38,7 @@ using namespace Cedar::Doubles;
 @property (nonatomic) NSInteger numberProperty;
 @property (strong, nonatomic) NSString *stringProperty;
 @property (strong, nonatomic) NSString *stringProperty2;
+@property (strong, nonatomic) NSArray *arrayProperty;
 
 @end
 
@@ -45,6 +48,7 @@ using namespace Cedar::Doubles;
 - (void)dealloc {
     [_stringProperty release];
     [_stringProperty2 release];
+    [_arrayProperty release];
 
     [super dealloc];
 }
@@ -226,6 +230,30 @@ describe(@"Binding", ^{
             BindToSelfOnInitObject *object = [BindToSelfOnInitObject new];
             object.stringProperty = @"A String";object.stringProperty = @"A String";object.stringProperty = @"A String";
             expect(object.stringProperty2).to(equal(@"A String"));
+        });
+    });
+
+    describe(@"-bindArrayProperty:toObserved:withKeyPath:", ^{
+        it(@"should change the destination object's array to the source object's array when first bound", ^{
+            sourceObject.arrayProperty = @[@"Some String"];
+            [destinationObject bindArrayProperty:@"arrayProperty" toObserved:sourceObject withKeyPath:@"arrayProperty"];
+            expect(destinationObject.arrayProperty).to(equal(@[@"Some String"]));
+        });
+
+        it(@"should change the destination object's array to the source object's array when reseting entire array", ^{
+            sourceObject.arrayProperty = @[@"Some String"];
+            [destinationObject bindArrayProperty:@"arrayProperty" toObserved:sourceObject withKeyPath:@"arrayProperty"];
+
+            sourceObject.arrayProperty = @[@"something else", @"another"];
+            expect(destinationObject.arrayProperty).to(equal(@[@"something else", @"another"]));
+        });
+
+        it(@"should change the destination object's array to the source object's array when modifying the array", ^{
+            sourceObject.arrayProperty = @[@"Some String"];
+            [destinationObject bindArrayProperty:@"arrayProperty" toObserved:sourceObject withKeyPath:@"arrayProperty"];
+
+            [[sourceObject mutableArrayValueForKey:@"arrayProperty"] addObject:@"another"];
+            expect(destinationObject.arrayProperty).to(equal(@[@"Some String", @"another"]));
         });
     });
 

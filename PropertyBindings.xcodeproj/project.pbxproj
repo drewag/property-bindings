@@ -26,6 +26,8 @@
 		494D614316B5E0DB0060BA2F /* Cedar-iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 494D614216B5E0DB0060BA2F /* Cedar-iOS.framework */; };
 		494D614A16B5E18A0060BA2F /* BindingSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 494D614916B5E18A0060BA2F /* BindingSpec.mm */; };
 		494D616016B5E3B80060BA2F /* NSObject+Binding.m in Sources */ = {isa = PBXBuildFile; fileRef = 494D610716B5DD5A0060BA2F /* NSObject+Binding.m */; };
+		498B64B417CA8F42004E8A05 /* BindingArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 498B64B317CA8F42004E8A05 /* BindingArray.m */; };
+		498B64B817CA8F47004E8A05 /* BindingArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 498B64B317CA8F42004E8A05 /* BindingArray.m */; };
 		498D614216C37645009C38CE /* UITableView+Binding.m in Sources */ = {isa = PBXBuildFile; fileRef = 498D614116C37645009C38CE /* UITableView+Binding.m */; };
 		498D614416C377DA009C38CE /* UITableViewBindingSpecSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 498D614316C377DA009C38CE /* UITableViewBindingSpecSpec.mm */; };
 		498D615216C381F6009C38CE /* libOCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 498D615116C381D3009C38CE /* libOCMock.a */; };
@@ -103,6 +105,8 @@
 		494D614116B5E0DB0060BA2F /* bindings-specs-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "bindings-specs-Prefix.pch"; sourceTree = "<group>"; };
 		494D614216B5E0DB0060BA2F /* Cedar-iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "Cedar-iOS.framework"; path = "Frameworks/Cedar-iOS.framework"; sourceTree = "<group>"; };
 		494D614916B5E18A0060BA2F /* BindingSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = BindingSpec.mm; path = specs/BindingSpec.mm; sourceTree = SOURCE_ROOT; };
+		498B64B217CA8F42004E8A05 /* BindingArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BindingArray.h; sourceTree = "<group>"; };
+		498B64B317CA8F42004E8A05 /* BindingArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BindingArray.m; sourceTree = "<group>"; };
 		498D614016C37645009C38CE /* UITableView+Binding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+Binding.h"; sourceTree = "<group>"; };
 		498D614116C37645009C38CE /* UITableView+Binding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+Binding.m"; sourceTree = "<group>"; };
 		498D614316C377DA009C38CE /* UITableViewBindingSpecSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UITableViewBindingSpecSpec.mm; sourceTree = "<group>"; };
@@ -201,6 +205,8 @@
 				4937F35517341803000E0662 /* RemoveAllAssociatedBindingsClassAttacher.m */,
 				4937F358173434BA000E0662 /* BindingTableView.h */,
 				4937F359173434BA000E0662 /* BindingTableView.m */,
+				498B64B217CA8F42004E8A05 /* BindingArray.h */,
+				498B64B317CA8F42004E8A05 /* BindingArray.m */,
 				4998CDD0174BCA2400B72160 /* BindingBlock.h */,
 				4998CDD1174BCA2400B72160 /* BindingBlock.m */,
 			);
@@ -364,6 +370,7 @@
 				4937F347173357DA000E0662 /* BindingManager.m in Sources */,
 				4937F34D17335967000E0662 /* Binding.m in Sources */,
 				4937F3501733598C000E0662 /* BindingPropertyLink.m in Sources */,
+				498B64B417CA8F42004E8A05 /* BindingArray.m in Sources */,
 				4937F35617341803000E0662 /* RemoveAllAssociatedBindingsClassAttacher.m in Sources */,
 				4937F35A173434BA000E0662 /* BindingTableView.m in Sources */,
 				4998CDD2174BCA2400B72160 /* BindingBlock.m in Sources */,
@@ -385,6 +392,7 @@
 				4937F35717341803000E0662 /* RemoveAllAssociatedBindingsClassAttacher.m in Sources */,
 				4937F35B173434BA000E0662 /* BindingTableView.m in Sources */,
 				4998CDD3174BCA2400B72160 /* BindingBlock.m in Sources */,
+				498B64B817CA8F47004E8A05 /* BindingArray.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

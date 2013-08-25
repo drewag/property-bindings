@@ -7,12 +7,17 @@
 
 #import <Foundation/Foundation.h>
 
+#define kPropertyBindingsMismatchedTypeException @"Mismatched Type"
 
 @interface NSObject (Binding)
 
 - (void)bindProperty:(NSString *)observingKeyPath
           toObserved:(NSObject *)observed
          withKeyPath:(NSString *)observedKeyPath;
+
+- (void)bindArrayProperty:(NSString *)observingKeyPath
+               toObserved:(NSObject *)observed
+              withKeyPath:(NSString *)observedKeyPath;
 
 - (void)unbindProperty:(NSString *)keyPath;
 - (void)unbindAll;

@@ -9,6 +9,7 @@
 
 #import "Binding.h"
 #import "BindingPropertyLink.h"
+#import "BindingArray.h"
 #import "BindingBlock.h"
 #import "BindingManager.h"
 
@@ -20,6 +21,21 @@
 {
     if (observed && observedKeyPath) {
         BindingPropertyLink *binding = [[BindingPropertyLink alloc]
+            initWithObserved:observed
+            atKeyPath:observedKeyPath
+            toDestination:self
+            atKeyPath:observingKeyPath];
+        [[BindingManager sharedInstance] setBinding:binding];
+        [binding release];
+    }
+}
+
+- (void)bindArrayProperty:(NSString *)observingKeyPath
+               toObserved:(NSObject *)observed
+              withKeyPath:(NSString *)observedKeyPath
+{
+    if (observingKeyPath && observed && observedKeyPath) {
+        BindingArray *binding = [[BindingArray alloc]
             initWithObserved:observed
             atKeyPath:observedKeyPath
             toDestination:self
