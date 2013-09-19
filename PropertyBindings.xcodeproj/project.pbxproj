@@ -114,6 +114,7 @@
 		498D615316C38A23009C38CE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		4998CDD0174BCA2400B72160 /* BindingBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BindingBlock.h; sourceTree = "<group>"; };
 		4998CDD1174BCA2400B72160 /* BindingBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BindingBlock.m; sourceTree = "<group>"; };
+		49D4C5FE17EBAA6C00C43803 /* PBLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBLogging.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,6 +194,7 @@
 		494D610416B5DD5A0060BA2F /* private */ = {
 			isa = PBXGroup;
 			children = (
+				49D4C5FE17EBAA6C00C43803 /* PBLogging.h */,
 				498D614116C37645009C38CE /* UITableView+Binding.m */,
 				494D610716B5DD5A0060BA2F /* NSObject+Binding.m */,
 				4937F345173357DA000E0662 /* BindingManager.h */,

@@ -10,6 +10,8 @@
 
 #import "Binding.h"
 
+#import "PBLogging.h"
+
 @interface BindingManager ()
 
 @property (nonatomic, strong) NSMutableArray *bindings;
@@ -100,7 +102,7 @@
                         context:binding];
                 }
                 @catch (NSException *exception) {
-                    NSLog(@"Failed to Remove Observer: %@", exception);
+                    PBDLog(@"Failed to Remove Observer: %@", exception);
                 }
                 [binding didUnbind];
             }
