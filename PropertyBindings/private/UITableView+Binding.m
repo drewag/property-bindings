@@ -32,6 +32,7 @@ NSString *tableViewBindingObserverProperty = @"TableViewBindingObserver";
       withArrayKeyPath:(NSString *)observedKeyPath
      cellCreationBlock:(UITableViewCellCreationBlock)creationBlock
             forSection:(NSInteger)section
+      withSectionTitle:(NSString *)sectionTitle
 {
     return [self
         bindToObserved:observed
@@ -39,6 +40,7 @@ NSString *tableViewBindingObserverProperty = @"TableViewBindingObserver";
         cellCreationBlock:creationBlock
         commitEditingStyleBlock:nil
         forSection:section
+        withSectionTitle:sectionTitle
     ];
 }
 
@@ -53,6 +55,7 @@ commitEditingStyleBlock:(UITableViewCommitEditingStyleBlock)editingBlock
         cellCreationBlock:creationBlock
         commitEditingStyleBlock:editingBlock
         forSection:0
+        withSectionTitle:nil
     ];
 }
 
@@ -60,7 +63,8 @@ commitEditingStyleBlock:(UITableViewCommitEditingStyleBlock)editingBlock
       withArrayKeyPath:(NSString *)observedKeyPath
      cellCreationBlock:(UITableViewCellCreationBlock)creationBlock
 commitEditingStyleBlock:(UITableViewCommitEditingStyleBlock)editingBlock
-             forSection:(NSInteger)section
+            forSection:(NSInteger)section
+      withSectionTitle:(NSString *)sectionTitle
 {
     if (observed && observedKeyPath) {
         BindingTableView *binding = [[BindingTableView alloc]
@@ -69,7 +73,9 @@ commitEditingStyleBlock:(UITableViewCommitEditingStyleBlock)editingBlock
             withTableView:self
             cellCreationBlock:creationBlock
             commitEditingStyleBlock:editingBlock
-            forSection:section];
+            forSection:section
+            withSectionTitle:sectionTitle
+        ];
         [[BindingManager sharedInstance] setBinding:binding];
         [binding release];
     }

@@ -40,6 +40,16 @@
 
 #pragma mark - UITableViewDataSource
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    id<UITableViewDataSource> delegate = [self delegateForSection:section];
+    if (delegate && [delegate respondsToSelector:@selector(tableView:titleForHeaderInSection:)]) {
+        return [delegate tableView:tableView titleForHeaderInSection:section];
+    }
+    else {
+        return nil;
+    }
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     NSInteger sectionCount = 0;
     for (NSNumber *section in self.delegates.allKeys) {

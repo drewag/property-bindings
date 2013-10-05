@@ -169,6 +169,7 @@ describe(@"UITableViewBindingSpec", ^{
                     return nil;
                 }
                 forSection:0
+                withSectionTitle:nil
            ];
 
            [tableView
@@ -178,9 +179,35 @@ describe(@"UITableViewBindingSpec", ^{
                     return nil;
                 }
                 forSection:1
+                withSectionTitle:nil
             ];
 
             expect([tableView.dataSource numberOfSectionsInTableView:tableView]).to(equal(2));
+        });
+
+        it(@"should return the section title names", ^{
+            [tableView
+                bindToObserved:sourceObject
+                withArrayKeyPath:@"arrayProperty"
+                cellCreationBlock:^UITableViewCell *(id object) {
+                    return nil;
+                }
+                forSection:0
+                withSectionTitle:@"section 1"
+           ];
+
+           [tableView
+                bindToObserved:sourceObject
+                withArrayKeyPath:@"arrayProperty"
+                cellCreationBlock:^UITableViewCell *(id object) {
+                    return nil;
+                }
+                forSection:1
+                withSectionTitle:@"section 2"
+            ];
+
+            expect([tableView.dataSource tableView:tableView titleForHeaderInSection:0]).to(equal(@"section 1"));
+            expect([tableView.dataSource tableView:tableView titleForHeaderInSection:1]).to(equal(@"section 2"));
         });
 
         it(@"should report the number of rows according to the number of objects in the array", ^{
@@ -217,7 +244,9 @@ describe(@"UITableViewBindingSpec", ^{
                     expect(object).to(equal(@"Object1"));
                     return cell;
                 }
-                forSection:0];
+                forSection:0
+                withSectionTitle:nil
+            ];
 
             [tableView
                 bindToObserved:secondSource
@@ -226,7 +255,9 @@ describe(@"UITableViewBindingSpec", ^{
                     expect(object).to(equal(@"Object2"));
                     return cell2;
                 }
-                forSection:1];
+                forSection:1
+                withSectionTitle:nil
+            ];
 
             NSIndexPath *path = [NSIndexPath indexPathForRow:0 inSection:0];
             expect([tableView.dataSource tableView:tableView cellForRowAtIndexPath:path]).to(be_same_instance_as(cell));
@@ -247,6 +278,7 @@ describe(@"UITableViewBindingSpec", ^{
                     expect(indexPath).to(be_same_instance_as(expectedIndexPath1));
                 }
                 forSection:0
+                withSectionTitle:nil
             ];
 
             [tableView bindToObserved:sourceObject withArrayKeyPath:@"arrayProperty" cellCreationBlock:nil commitEditingStyleBlock:^(UITableViewCellEditingStyle style, NSIndexPath *indexPath) {
@@ -255,6 +287,7 @@ describe(@"UITableViewBindingSpec", ^{
                     expect(indexPath).to(be_same_instance_as(expectedIndexPath2));
                 }
                 forSection:1
+                withSectionTitle:nil
             ];
 
             [tableView.dataSource

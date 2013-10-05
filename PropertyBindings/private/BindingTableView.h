@@ -18,6 +18,7 @@
          withTableView:(UITableView *)tableView
      cellCreationBlock:(UITableViewCellCreationBlock)creationBlock
 commitEditingStyleBlock:(UITableViewCommitEditingStyleBlock)editingBlock
-            forSection:(NSInteger)section;
+            forSection:(NSInteger)section
+      withSectionTitle:(NSString *)sectionTitle;
 
 @end

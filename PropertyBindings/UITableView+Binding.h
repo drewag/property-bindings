@@ -19,7 +19,8 @@ typedef void(^UITableViewCommitEditingStyleBlock)(UITableViewCellEditingStyle st
 - (void)bindToObserved:(NSObject *)observed
       withArrayKeyPath:(NSString *)observedKeyPath
      cellCreationBlock:(UITableViewCellCreationBlock)creationBlock
-            forSection:(NSInteger)section;
+            forSection:(NSInteger)section
+      withSectionTitle:(NSString *)sectionTitle;
 
 - (void)bindToObserved:(NSObject *)observed
       withArrayKeyPath:(NSString *)observedKeyPath
@@ -30,7 +31,8 @@ commitEditingStyleBlock:(UITableViewCommitEditingStyleBlock)editingBlock;
       withArrayKeyPath:(NSString *)observedKeyPath
      cellCreationBlock:(UITableViewCellCreationBlock)creationBlock
 commitEditingStyleBlock:(UITableViewCommitEditingStyleBlock)editingBlock
-             forSection:(NSInteger)section;
+             forSection:(NSInteger)section
+      withSectionTitle:(NSString *)sectionTitle;
 
 - (void)unbind;
 

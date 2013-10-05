@@ -14,6 +14,7 @@
 @interface BindingTableView ()
 
 @property (nonatomic) NSInteger section;
+@property (nonatomic, strong) NSString *sectionTitle;
 @property (nonatomic, assign) UITableView *tableView;
 @property (nonatomic, copy) UITableViewCellCreationBlock cellCreationBlock;
 @property (nonatomic, copy) UITableViewCommitEditingStyleBlock commitEditingStyleBlock;
@@ -31,11 +32,13 @@
      cellCreationBlock:(UITableViewCellCreationBlock)creationBlock
 commitEditingStyleBlock:(UITableViewCommitEditingStyleBlock)editingBlock
             forSection:(NSInteger)section
+      withSectionTitle:(NSString *)sectionTitle
 {
     self = [super initWithObserved:observed atKeyPath:keyPath];
     if (self) {
         self.tableView = tableView;
         self.section = section;
+        self.sectionTitle = sectionTitle;
         if (self.tableView.dataSource
             && [self.tableView.dataSource isKindOfClass:[SplitTableViewDataSource class]])
         {
@@ -56,6 +59,8 @@ commitEditingStyleBlock:(UITableViewCommitEditingStyleBlock)editingBlock
 - (void)dealloc {
     [_cellCreationBlock release];
     [_commitEditingStyleBlock release];
+    [_sectionTitle release];
+    [_splitDataSource release];
 
     [super dealloc];
 }
@@ -129,6 +134,10 @@ commitEditingStyleBlock:(UITableViewCommitEditingStyleBlock)editingBlock
 }
 
 #pragma mark - UITableViewDataSource
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    return self.sectionTitle;
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self sourceArray].count;
