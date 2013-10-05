@@ -17,6 +17,7 @@
              atKeyPath:(NSString *)keyPath
          withTableView:(UITableView *)tableView
      cellCreationBlock:(UITableViewCellCreationBlock)creationBlock
-commitEditingStyleBlock:(UITableViewCommitEditingStyleBlock)editingBlock;
+commitEditingStyleBlock:(UITableViewCommitEditingStyleBlock)editingBlock
+            forSection:(NSInteger)section;
 
 @end

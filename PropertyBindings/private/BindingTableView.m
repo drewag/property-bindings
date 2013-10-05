@@ -9,12 +9,15 @@
 #import "BindingTableView.h"
 
 #import "RemoveAllAssociatedBindingsClassAttacher.h"
+#import "SplitTableViewDataSource.h"
 
 @interface BindingTableView ()
 
+@property (nonatomic) NSInteger section;
 @property (nonatomic, assign) UITableView *tableView;
 @property (nonatomic, copy) UITableViewCellCreationBlock cellCreationBlock;
 @property (nonatomic, copy) UITableViewCommitEditingStyleBlock commitEditingStyleBlock;
+@property (nonatomic, strong) SplitTableViewDataSource *splitDataSource;
 
 - (NSArray *)sourceArray;
 
@@ -27,11 +30,23 @@
          withTableView:(UITableView *)tableView
      cellCreationBlock:(UITableViewCellCreationBlock)creationBlock
 commitEditingStyleBlock:(UITableViewCommitEditingStyleBlock)editingBlock
+            forSection:(NSInteger)section
 {
     self = [super initWithObserved:observed atKeyPath:keyPath];
     if (self) {
         self.tableView = tableView;
-        self.tableView.dataSource = self;
+        self.section = section;
+        if (self.tableView.dataSource
+            && [self.tableView.dataSource isKindOfClass:[SplitTableViewDataSource class]])
+        {
+            self.splitDataSource = (SplitTableViewDataSource *)self.tableView.dataSource;
+        }
+        else {
+            self.splitDataSource = [SplitTableViewDataSource new];
+            self.tableView.dataSource = self.splitDataSource;
+        }
+        [self.splitDataSource setDelegate:self forSection:section];
+
         self.cellCreationBlock = creationBlock;
         self.commitEditingStyleBlock = editingBlock;
     }
@@ -54,7 +69,7 @@ commitEditingStyleBlock:(UITableViewCommitEditingStyleBlock)editingBlock
         NSIndexSet *indexes = [change objectForKey:NSKeyValueChangeIndexesKey];
         NSMutableArray *indexArray = [NSMutableArray array];
         [indexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:idx inSection:0];
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:idx inSection:self.section];
             [indexArray addObject:indexPath];
         }];
         [self.tableView beginUpdates];
@@ -91,7 +106,7 @@ commitEditingStyleBlock:(UITableViewCommitEditingStyleBlock)editingBlock
         return NO;
     }
 
-    return binding.tableView == self.tableView;
+    return binding.tableView == self.tableView && binding.section == self.section;
 }
 
 - (BOOL)isAssociatedWithObjects:(id)object keyPath:(NSString *)keyPath {
@@ -105,14 +120,15 @@ commitEditingStyleBlock:(UITableViewCommitEditingStyleBlock)editingBlock
 - (void)didUnbind {
     [super didUnbind];
 
-    self.tableView.dataSource = nil;
+    if ([self.tableView.dataSource isKindOfClass:[SplitTableViewDataSource class]]) {
+        [(SplitTableViewDataSource *)self.tableView.dataSource clearDelegate:self forSection:self.section];
+    }
+    else if (self.tableView.dataSource == self) {
+        self.tableView.dataSource = nil;
+    }
 }
 
 #pragma mark - UITableViewDataSource
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self sourceArray].count;
@@ -130,7 +146,9 @@ commitEditingStyleBlock:(UITableViewCommitEditingStyleBlock)editingBlock
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    self.commitEditingStyleBlock(editingStyle, indexPath);
+    if (self.commitEditingStyleBlock) {
+        self.commitEditingStyleBlock(editingStyle, indexPath);
+    }
 }
 
 #pragma mark - Private Methods

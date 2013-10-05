@@ -17,6 +17,8 @@
 		4937F35717341803000E0662 /* RemoveAllAssociatedBindingsClassAttacher.m in Sources */ = {isa = PBXBuildFile; fileRef = 4937F35517341803000E0662 /* RemoveAllAssociatedBindingsClassAttacher.m */; };
 		4937F35A173434BA000E0662 /* BindingTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4937F359173434BA000E0662 /* BindingTableView.m */; };
 		4937F35B173434BA000E0662 /* BindingTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4937F359173434BA000E0662 /* BindingTableView.m */; };
+		4942C36317FFB51600564343 /* SplitTableViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 4942C36217FFB51600564343 /* SplitTableViewDataSource.m */; };
+		4942C36717FFB9F600564343 /* SplitTableViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 4942C36217FFB51600564343 /* SplitTableViewDataSource.m */; };
 		494D60F616B5D9250060BA2F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 494D60F516B5D9250060BA2F /* Foundation.framework */; };
 		494D611016B5DD5A0060BA2F /* NSObject+Binding.m in Sources */ = {isa = PBXBuildFile; fileRef = 494D610716B5DD5A0060BA2F /* NSObject+Binding.m */; };
 		494D613616B5E0DB0060BA2F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 494D60F516B5D9250060BA2F /* Foundation.framework */; };
@@ -92,6 +94,8 @@
 		4937F35517341803000E0662 /* RemoveAllAssociatedBindingsClassAttacher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoveAllAssociatedBindingsClassAttacher.m; sourceTree = "<group>"; };
 		4937F358173434BA000E0662 /* BindingTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BindingTableView.h; sourceTree = "<group>"; };
 		4937F359173434BA000E0662 /* BindingTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BindingTableView.m; sourceTree = "<group>"; };
+		4942C36117FFB51600564343 /* SplitTableViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SplitTableViewDataSource.h; sourceTree = "<group>"; };
+		4942C36217FFB51600564343 /* SplitTableViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SplitTableViewDataSource.m; sourceTree = "<group>"; };
 		494D60F216B5D9250060BA2F /* libPropertyBindings.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPropertyBindings.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		494D60F516B5D9250060BA2F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		494D60F916B5D9250060BA2F /* PropertyBindings-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "PropertyBindings-Prefix.pch"; path = "private/PropertyBindings-Prefix.pch"; sourceTree = "<group>"; };
@@ -211,6 +215,8 @@
 				498B64B317CA8F42004E8A05 /* BindingArray.m */,
 				4998CDD0174BCA2400B72160 /* BindingBlock.h */,
 				4998CDD1174BCA2400B72160 /* BindingBlock.m */,
+				4942C36117FFB51600564343 /* SplitTableViewDataSource.h */,
+				4942C36217FFB51600564343 /* SplitTableViewDataSource.m */,
 			);
 			path = private;
 			sourceTree = "<group>";
@@ -372,6 +378,7 @@
 				4937F347173357DA000E0662 /* BindingManager.m in Sources */,
 				4937F34D17335967000E0662 /* Binding.m in Sources */,
 				4937F3501733598C000E0662 /* BindingPropertyLink.m in Sources */,
+				4942C36317FFB51600564343 /* SplitTableViewDataSource.m in Sources */,
 				498B64B417CA8F42004E8A05 /* BindingArray.m in Sources */,
 				4937F35617341803000E0662 /* RemoveAllAssociatedBindingsClassAttacher.m in Sources */,
 				4937F35A173434BA000E0662 /* BindingTableView.m in Sources */,
@@ -385,6 +392,7 @@
 			files = (
 				494D614016B5E0DB0060BA2F /* main.m in Sources */,
 				494D614A16B5E18A0060BA2F /* BindingSpec.mm in Sources */,
+				4942C36717FFB9F600564343 /* SplitTableViewDataSource.m in Sources */,
 				494D616016B5E3B80060BA2F /* NSObject+Binding.m in Sources */,
 				498D614416C377DA009C38CE /* UITableViewBindingSpecSpec.mm in Sources */,
 				498D615516C38C9C009C38CE /* UITableView+Binding.m in Sources */,

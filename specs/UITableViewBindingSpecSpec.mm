@@ -27,17 +27,22 @@ describe(@"UITableViewBindingSpec", ^{
     __block UITableView *tableView = nil;
     __block id mockTableView = nil;
     __block SourceObjectWithArray *sourceObject = nil;
+    __block SourceObjectWithArray *secondSource = nil;
 
     beforeEach(^{
         tableView = [[UITableView alloc] init];
 //        mockTableView = [OCMockObject partialMockForObject:tableView];
         sourceObject = [SourceObjectWithArray new];
         sourceObject.arrayProperty = [NSMutableArray array];
+       
+        secondSource = [SourceObjectWithArray new];
+        secondSource.arrayProperty = [NSMutableArray array];
     });
 
     afterEach(^{
         [tableView release];
         [sourceObject release];
+        [secondSource release];
     });
 
     describe(@"observations", ^{
@@ -46,7 +51,7 @@ describe(@"UITableViewBindingSpec", ^{
                 bindToObserved:sourceObject
                 withArrayKeyPath:@"arrayProperty"
                 cellCreationBlock:^UITableViewCell *(id object) {
-                    return nil;
+                    return [[UITableViewCell new] autorelease];
                 }];
 
             [[mockTableView expect] beginUpdates];
@@ -70,7 +75,7 @@ describe(@"UITableViewBindingSpec", ^{
                 bindToObserved:sourceObject
                 withArrayKeyPath:@"arrayProperty"
                 cellCreationBlock:^UITableViewCell *(id object) {
-                    return nil;
+                    return [[UITableViewCell new] autorelease];
                 }];
 
             [[mockTableView expect] beginUpdates];
@@ -94,7 +99,7 @@ describe(@"UITableViewBindingSpec", ^{
                 bindToObserved:sourceObject
                 withArrayKeyPath:@"arrayProperty"
                 cellCreationBlock:^UITableViewCell *(id object) {
-                    return nil;
+                    return [[UITableViewCell new] autorelease];
                 }];
 
             [[mockTableView expect] beginUpdates];
@@ -118,7 +123,7 @@ describe(@"UITableViewBindingSpec", ^{
                 bindToObserved:sourceObject
                 withArrayKeyPath:@"arrayProperty"
                 cellCreationBlock:^UITableViewCell *(id object) {
-                    return nil;
+                    return [[UITableViewCell new] autorelease];
                 }];
             
             sourceObject.arrayProperty = [NSMutableArray arrayWithObject:@"Object1"];
@@ -131,7 +136,7 @@ describe(@"UITableViewBindingSpec", ^{
                 bindToObserved:sourceObject
                 withArrayKeyPath:@"arrayProperty"
                 cellCreationBlock:^UITableViewCell *(id object) {
-                    return nil;
+                    return [[UITableViewCell new] autorelease];
                 }];
 
             [[mockTableView reject] reloadData];
@@ -156,6 +161,28 @@ describe(@"UITableViewBindingSpec", ^{
             expect([tableView.dataSource numberOfSectionsInTableView:tableView]).to(equal(1));
         });
 
+        it(@"should report 2 sections in the table when bound twice", ^{
+            [tableView
+                bindToObserved:sourceObject
+                withArrayKeyPath:@"arrayProperty"
+                cellCreationBlock:^UITableViewCell *(id object) {
+                    return nil;
+                }
+                forSection:0
+           ];
+
+           [tableView
+                bindToObserved:sourceObject
+                withArrayKeyPath:@"arrayProperty"
+                cellCreationBlock:^UITableViewCell *(id object) {
+                    return nil;
+                }
+                forSection:1
+            ];
+
+            expect([tableView.dataSource numberOfSectionsInTableView:tableView]).to(equal(2));
+        });
+
         it(@"should report the number of rows according to the number of objects in the array", ^{
             [sourceObject.arrayProperty addObject:@"Object1"];
             [sourceObject.arrayProperty addObject:@"Object2"];
@@ -173,9 +200,15 @@ describe(@"UITableViewBindingSpec", ^{
 
         it(@"should use the given block to create cells", ^{
             [sourceObject.arrayProperty addObject:@"Object1"];
+            [secondSource.arrayProperty addObject:@"Object2"];
 
             __block UITableViewCell *cell = nil;
             cell = [[UITableViewCell alloc] init];
+            cell.textLabel.text = @"cell1";
+
+            __block UITableViewCell *cell2 = nil;
+            cell2 = [[UITableViewCell alloc] init];
+            cell2.textLabel.text = @"cell1";
 
             [tableView
                 bindToObserved:sourceObject
@@ -183,29 +216,60 @@ describe(@"UITableViewBindingSpec", ^{
                 cellCreationBlock:^UITableViewCell *(NSString *object) {
                     expect(object).to(equal(@"Object1"));
                     return cell;
-                }];
+                }
+                forSection:0];
+
+            [tableView
+                bindToObserved:secondSource
+                withArrayKeyPath:@"arrayProperty"
+                cellCreationBlock:^UITableViewCell *(NSString *object) {
+                    expect(object).to(equal(@"Object2"));
+                    return cell2;
+                }
+                forSection:1];
 
             NSIndexPath *path = [NSIndexPath indexPathForRow:0 inSection:0];
             expect([tableView.dataSource tableView:tableView cellForRowAtIndexPath:path]).to(be_same_instance_as(cell));
+
+            path = [NSIndexPath indexPathForRow:0 inSection:1];
+            expect([tableView.dataSource tableView:tableView cellForRowAtIndexPath:path]).to(be_same_instance_as(cell2));
         });
 
         it(@"should call the commit editing style callback", ^{
-            NSIndexPath *expectedIndexPath = [NSIndexPath indexPathForRow:1 inSection:3];
+            NSIndexPath *expectedIndexPath1 = [NSIndexPath indexPathForRow:1 inSection:0];
+            NSIndexPath *expectedIndexPath2 = [NSIndexPath indexPathForRow:2 inSection:1];
 
-            __block BOOL callbackCalled = NO;
+            __block BOOL callback1Called = NO;
+            __block BOOL callback2Called = NO;
             [tableView bindToObserved:sourceObject withArrayKeyPath:@"arrayProperty" cellCreationBlock:nil commitEditingStyleBlock:^(UITableViewCellEditingStyle style, NSIndexPath *indexPath) {
-                callbackCalled = YES;
-                expect(style).to(equal(UITableViewCellEditingStyleInsert));
-                expect(indexPath).to(be_same_instance_as(expectedIndexPath));
-            }];
+                    callback1Called = YES;
+                    expect(style).to(equal(UITableViewCellEditingStyleInsert));
+                    expect(indexPath).to(be_same_instance_as(expectedIndexPath1));
+                }
+                forSection:0
+            ];
+
+            [tableView bindToObserved:sourceObject withArrayKeyPath:@"arrayProperty" cellCreationBlock:nil commitEditingStyleBlock:^(UITableViewCellEditingStyle style, NSIndexPath *indexPath) {
+                    callback2Called = YES;
+                    expect(style).to(equal(UITableViewCellEditingStyleDelete));
+                    expect(indexPath).to(be_same_instance_as(expectedIndexPath2));
+                }
+                forSection:1
+            ];
 
             [tableView.dataSource
                 tableView:nil
                 commitEditingStyle:UITableViewCellEditingStyleInsert
-                forRowAtIndexPath:expectedIndexPath
+                forRowAtIndexPath:expectedIndexPath1
             ];
+            expect(callback1Called).to(equal(YES));
 
-            expect(callbackCalled).to(equal(YES));
+            [tableView.dataSource
+                tableView:nil
+                commitEditingStyle:UITableViewCellEditingStyleDelete
+                forRowAtIndexPath:expectedIndexPath2
+            ];
+            expect(callback2Called).to(equal(YES));
         });
     });
 });
