@@ -89,3 +89,8 @@ Instead of needing to implement a UITableViewDataSource object you can bind a ta
 The cellCreationBlock will be called every time the table needs a new cell.
 
 **Note:** in order to handle insertions, deletions, and modifications you must ensure that the property triggers granular KVO notifications which an NSArray does not do automatically.
+
+Contribution
+=============
+
+I encourage anybody with ideas or bug fixes to make changes and submit pull requests. If you do, please follow the [CAAG Commit Style](http://drewag.me/posts/changes-at-a-glance?source=github).
