@@ -183,6 +183,7 @@ describe(@"UITableViewBindingSpec", ^{
             ];
 
             expect([tableView.dataSource numberOfSectionsInTableView:tableView]).to(equal(2));
+            expect([tableView.dataSource tableView:tableView canEditRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]]).to(equal(NO));
         });
 
         it(@"should return the section title names", ^{
@@ -296,6 +297,7 @@ describe(@"UITableViewBindingSpec", ^{
                 forRowAtIndexPath:expectedIndexPath1
             ];
             expect(callback1Called).to(equal(YES));
+            expect([tableView.dataSource tableView:tableView canEditRowAtIndexPath:expectedIndexPath1]).to(equal(YES));
 
             [tableView.dataSource
                 tableView:nil
@@ -303,6 +305,7 @@ describe(@"UITableViewBindingSpec", ^{
                 forRowAtIndexPath:expectedIndexPath2
             ];
             expect(callback2Called).to(equal(YES));
+            expect([tableView.dataSource tableView:tableView canEditRowAtIndexPath:expectedIndexPath2]).to(equal(YES));
         });
     });
 });

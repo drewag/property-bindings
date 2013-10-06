@@ -85,4 +85,12 @@
     }
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    id<UITableViewDataSource> delegate = [self delegateForSection:indexPath.section];
+    if (delegate && [delegate respondsToSelector:@selector(tableView:canEditRowAtIndexPath:)]) {
+        return [delegate tableView:tableView canEditRowAtIndexPath:indexPath];
+    }
+    return NO;
+}
+
 @end
