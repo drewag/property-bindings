@@ -19,11 +19,25 @@ NSString *tableViewBindingObserverProperty = @"TableViewBindingObserver";
 - (void)bindToObserved:(NSObject *)observed
       withArrayKeyPath:(NSString *)observedKeyPath
      cellCreationBlock:(UITableViewCellCreationBlock)creationBlock
+ {
+    return [self
+        bindToObserved:observed
+        withArrayKeyPath:observedKeyPath
+        cellCreationBlock:creationBlock
+        topCellCreationBlock:nil
+    ];
+ }
+
+- (void)bindToObserved:(NSObject *)observed
+      withArrayKeyPath:(NSString *)observedKeyPath
+     cellCreationBlock:(UITableViewCellCreationBlock)creationBlock
+  topCellCreationBlock:(UITableViewTopCellCreationBlock)topCreationBlock
 {
     return [self
         bindToObserved:observed
         withArrayKeyPath:observedKeyPath
         cellCreationBlock:creationBlock
+        topCellCreationBlock:topCreationBlock
         commitEditingStyleBlock:nil
     ];
 }
@@ -31,6 +45,7 @@ NSString *tableViewBindingObserverProperty = @"TableViewBindingObserver";
 - (void)bindToObserved:(NSObject *)observed
       withArrayKeyPath:(NSString *)observedKeyPath
      cellCreationBlock:(UITableViewCellCreationBlock)creationBlock
+  topCellCreationBlock:(UITableViewTopCellCreationBlock)topCreationBlock
             forSection:(NSInteger)section
       withSectionTitle:(NSString *)sectionTitle
 {
@@ -38,6 +53,7 @@ NSString *tableViewBindingObserverProperty = @"TableViewBindingObserver";
         bindToObserved:observed
         withArrayKeyPath:observedKeyPath
         cellCreationBlock:creationBlock
+        topCellCreationBlock:topCreationBlock
         commitEditingStyleBlock:nil
         forSection:section
         withSectionTitle:sectionTitle
@@ -47,12 +63,14 @@ NSString *tableViewBindingObserverProperty = @"TableViewBindingObserver";
 - (void)bindToObserved:(NSObject *)observed
       withArrayKeyPath:(NSString *)observedKeyPath
      cellCreationBlock:(UITableViewCellCreationBlock)creationBlock
+  topCellCreationBlock:(UITableViewTopCellCreationBlock)topCreationBlock
 commitEditingStyleBlock:(UITableViewCommitEditingStyleBlock)editingBlock
 {
     return [self
         bindToObserved:observed
         withArrayKeyPath:observedKeyPath
         cellCreationBlock:creationBlock
+        topCellCreationBlock:topCreationBlock
         commitEditingStyleBlock:editingBlock
         forSection:0
         withSectionTitle:nil
@@ -62,6 +80,7 @@ commitEditingStyleBlock:(UITableViewCommitEditingStyleBlock)editingBlock
 - (void)bindToObserved:(NSObject *)observed
       withArrayKeyPath:(NSString *)observedKeyPath
      cellCreationBlock:(UITableViewCellCreationBlock)creationBlock
+  topCellCreationBlock:(UITableViewTopCellCreationBlock)topCreationBlock
 commitEditingStyleBlock:(UITableViewCommitEditingStyleBlock)editingBlock
             forSection:(NSInteger)section
       withSectionTitle:(NSString *)sectionTitle
@@ -72,6 +91,7 @@ commitEditingStyleBlock:(UITableViewCommitEditingStyleBlock)editingBlock
             atKeyPath:observedKeyPath
             withTableView:self
             cellCreationBlock:creationBlock
+            topCellCreationBlock:topCreationBlock
             commitEditingStyleBlock:editingBlock
             forSection:section
             withSectionTitle:sectionTitle

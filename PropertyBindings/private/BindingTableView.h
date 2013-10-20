@@ -17,6 +17,7 @@
              atKeyPath:(NSString *)keyPath
          withTableView:(UITableView *)tableView
      cellCreationBlock:(UITableViewCellCreationBlock)creationBlock
+  topCellCreationBlock:(UITableViewTopCellCreationBlock)topCreationBlock
 commitEditingStyleBlock:(UITableViewCommitEditingStyleBlock)editingBlock
             forSection:(NSInteger)section
       withSectionTitle:(NSString *)sectionTitle;

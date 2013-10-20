@@ -17,6 +17,7 @@
 @property (nonatomic, strong) NSString *sectionTitle;
 @property (nonatomic, assign) UITableView *tableView;
 @property (nonatomic, copy) UITableViewCellCreationBlock cellCreationBlock;
+@property (nonatomic, copy) UITableViewTopCellCreationBlock topCellCreationBlock;
 @property (nonatomic, copy) UITableViewCommitEditingStyleBlock commitEditingStyleBlock;
 @property (nonatomic, strong) SplitTableViewDataSource *splitDataSource;
 
@@ -30,6 +31,7 @@
              atKeyPath:(NSString *)keyPath
          withTableView:(UITableView *)tableView
      cellCreationBlock:(UITableViewCellCreationBlock)creationBlock
+  topCellCreationBlock:(UITableViewTopCellCreationBlock)topCreationBlock
 commitEditingStyleBlock:(UITableViewCommitEditingStyleBlock)editingBlock
             forSection:(NSInteger)section
       withSectionTitle:(NSString *)sectionTitle
@@ -51,6 +53,7 @@ commitEditingStyleBlock:(UITableViewCommitEditingStyleBlock)editingBlock
         [self.splitDataSource setDelegate:self forSection:section];
 
         self.cellCreationBlock = creationBlock;
+        self.topCellCreationBlock = topCreationBlock;
         self.commitEditingStyleBlock = editingBlock;
     }
     return self;
@@ -59,6 +62,7 @@ commitEditingStyleBlock:(UITableViewCommitEditingStyleBlock)editingBlock
 - (void)dealloc {
     [_cellCreationBlock release];
     [_commitEditingStyleBlock release];
+    [_topCellCreationBlock release];
     [_sectionTitle release];
     [_splitDataSource release];
 
@@ -74,6 +78,9 @@ commitEditingStyleBlock:(UITableViewCommitEditingStyleBlock)editingBlock
         NSIndexSet *indexes = [change objectForKey:NSKeyValueChangeIndexesKey];
         NSMutableArray *indexArray = [NSMutableArray array];
         [indexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+            if (self.topCellCreationBlock) {
+                idx++;
+            }
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:idx inSection:self.section];
             [indexArray addObject:indexPath];
         }];
@@ -140,22 +147,37 @@ commitEditingStyleBlock:(UITableViewCommitEditingStyleBlock)editingBlock
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self sourceArray].count;
+    NSUInteger count = [self sourceArray].count;
+    if (self.topCellCreationBlock) {
+        count++;
+    }
+    return count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.topCellCreationBlock) {
+        if (indexPath.row == 0) {
+            return self.topCellCreationBlock();
+        }
+        else {
+            return self.cellCreationBlock([self sourceArray][indexPath.row - 1]);
+        }
+    }
     return self.cellCreationBlock([self sourceArray][indexPath.row]);
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     if (self.commitEditingStyleBlock) {
-        return YES;
+        return indexPath.row != 0;
     }
     return NO;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (self.commitEditingStyleBlock) {
+        if (self.topCellCreationBlock) {
+            indexPath = [NSIndexPath indexPathForRow:indexPath.row - 1 inSection:indexPath.section];
+        }
         self.commitEditingStyleBlock(editingStyle, indexPath);
     }
 }

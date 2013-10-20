@@ -168,6 +168,7 @@ describe(@"UITableViewBindingSpec", ^{
                 cellCreationBlock:^UITableViewCell *(id object) {
                     return nil;
                 }
+                topCellCreationBlock:nil
                 forSection:0
                 withSectionTitle:nil
            ];
@@ -178,6 +179,7 @@ describe(@"UITableViewBindingSpec", ^{
                 cellCreationBlock:^UITableViewCell *(id object) {
                     return nil;
                 }
+                topCellCreationBlock:nil
                 forSection:1
                 withSectionTitle:nil
             ];
@@ -193,6 +195,7 @@ describe(@"UITableViewBindingSpec", ^{
                 cellCreationBlock:^UITableViewCell *(id object) {
                     return nil;
                 }
+                topCellCreationBlock:nil
                 forSection:0
                 withSectionTitle:@"section 1"
            ];
@@ -203,6 +206,7 @@ describe(@"UITableViewBindingSpec", ^{
                 cellCreationBlock:^UITableViewCell *(id object) {
                     return nil;
                 }
+                topCellCreationBlock:nil
                 forSection:1
                 withSectionTitle:@"section 2"
             ];
@@ -245,6 +249,7 @@ describe(@"UITableViewBindingSpec", ^{
                     expect(object).to(equal(@"Object1"));
                     return cell;
                 }
+                topCellCreationBlock:nil
                 forSection:0
                 withSectionTitle:nil
             ];
@@ -256,6 +261,7 @@ describe(@"UITableViewBindingSpec", ^{
                     expect(object).to(equal(@"Object2"));
                     return cell2;
                 }
+                topCellCreationBlock:nil
                 forSection:1
                 withSectionTitle:nil
             ];
@@ -267,13 +273,79 @@ describe(@"UITableViewBindingSpec", ^{
             expect([tableView.dataSource tableView:tableView cellForRowAtIndexPath:path]).to(be_same_instance_as(cell2));
         });
 
+        it(@"should use the top cell block for just the first cell", ^{
+            [sourceObject.arrayProperty addObject:@"Object1"];
+            [secondSource.arrayProperty addObject:@"Object2"];
+
+            __block UITableViewCell *cell = nil;
+            cell = [[UITableViewCell alloc] init];
+            cell.textLabel.text = @"cell1";
+
+            __block UITableViewCell *topCell = nil;
+            topCell = [[UITableViewCell alloc] init];
+            cell.textLabel.text = @"topcell1";
+
+            __block UITableViewCell *cell2 = nil;
+            cell2 = [[UITableViewCell alloc] init];
+            cell2.textLabel.text = @"cell1";
+
+            __block UITableViewCell *topCell2 = nil;
+            topCell2 = [[UITableViewCell alloc] init];
+            topCell2.textLabel.text = @"topcell2";
+
+            [tableView
+                bindToObserved:sourceObject
+                withArrayKeyPath:@"arrayProperty"
+                cellCreationBlock:^UITableViewCell *(NSString *object) {
+                    expect(object).to(equal(@"Object1"));
+                    return cell;
+                }
+                topCellCreationBlock:^UITableViewCell *{
+                    return topCell;
+                }
+                forSection:0
+                withSectionTitle:nil
+            ];
+
+            [tableView
+                bindToObserved:secondSource
+                withArrayKeyPath:@"arrayProperty"
+                cellCreationBlock:^UITableViewCell *(NSString *object) {
+                    expect(object).to(equal(@"Object2"));
+                    return cell2;
+                }
+                topCellCreationBlock:^UITableViewCell *{
+                    return topCell2;
+                }
+                forSection:1
+                withSectionTitle:nil
+            ];
+
+            NSIndexPath *path = [NSIndexPath indexPathForRow:0 inSection:0];
+            expect([tableView.dataSource tableView:tableView cellForRowAtIndexPath:path]).to(be_same_instance_as(topCell));
+
+            path = [NSIndexPath indexPathForRow:1 inSection:0];
+            expect([tableView.dataSource tableView:tableView cellForRowAtIndexPath:path]).to(be_same_instance_as(cell));
+
+            path = [NSIndexPath indexPathForRow:0 inSection:1];
+            expect([tableView.dataSource tableView:tableView cellForRowAtIndexPath:path]).to(be_same_instance_as(topCell2));
+
+            path = [NSIndexPath indexPathForRow:1 inSection:1];
+            expect([tableView.dataSource tableView:tableView cellForRowAtIndexPath:path]).to(be_same_instance_as(cell2));
+        });
+
         it(@"should call the commit editing style callback", ^{
             NSIndexPath *expectedIndexPath1 = [NSIndexPath indexPathForRow:1 inSection:0];
             NSIndexPath *expectedIndexPath2 = [NSIndexPath indexPathForRow:2 inSection:1];
 
             __block BOOL callback1Called = NO;
             __block BOOL callback2Called = NO;
-            [tableView bindToObserved:sourceObject withArrayKeyPath:@"arrayProperty" cellCreationBlock:nil commitEditingStyleBlock:^(UITableViewCellEditingStyle style, NSIndexPath *indexPath) {
+            [tableView
+                bindToObserved:sourceObject
+                withArrayKeyPath:@"arrayProperty"
+                cellCreationBlock:nil
+                topCellCreationBlock:nil
+                commitEditingStyleBlock:^(UITableViewCellEditingStyle style, NSIndexPath *indexPath) {
                     callback1Called = YES;
                     expect(style).to(equal(UITableViewCellEditingStyleInsert));
                     expect(indexPath).to(be_same_instance_as(expectedIndexPath1));
@@ -282,7 +354,12 @@ describe(@"UITableViewBindingSpec", ^{
                 withSectionTitle:nil
             ];
 
-            [tableView bindToObserved:sourceObject withArrayKeyPath:@"arrayProperty" cellCreationBlock:nil commitEditingStyleBlock:^(UITableViewCellEditingStyle style, NSIndexPath *indexPath) {
+            [tableView
+                bindToObserved:sourceObject
+                withArrayKeyPath:@"arrayProperty"
+                cellCreationBlock:nil
+                topCellCreationBlock:nil
+                commitEditingStyleBlock:^(UITableViewCellEditingStyle style, NSIndexPath *indexPath) {
                     callback2Called = YES;
                     expect(style).to(equal(UITableViewCellEditingStyleDelete));
                     expect(indexPath).to(be_same_instance_as(expectedIndexPath2));
