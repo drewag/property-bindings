@@ -168,7 +168,10 @@ commitEditingStyleBlock:(UITableViewCommitEditingStyleBlock)editingBlock
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     if (self.commitEditingStyleBlock) {
-        return indexPath.row != 0;
+        if (self.topCellCreationBlock) {
+            return indexPath.row != 0;
+        }
+        return YES;
     }
     return NO;
 }
