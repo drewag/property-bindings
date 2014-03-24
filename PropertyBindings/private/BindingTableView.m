@@ -47,7 +47,9 @@ commitEditingStyleBlock:(UITableViewCommitEditingStyleBlock)editingBlock
             self.splitDataSource = (SplitTableViewDataSource *)self.tableView.dataSource;
         }
         else {
-            self.splitDataSource = [SplitTableViewDataSource new];
+            SplitTableViewDataSource *dataSource = [SplitTableViewDataSource new];
+            self.splitDataSource = dataSource;
+            [dataSource release];
             self.tableView.dataSource = self.splitDataSource;
         }
         [self.splitDataSource setDelegate:self forSection:section];
