@@ -12,6 +12,8 @@
 #import "BindingTableView.h"
 #import "BindingManager.h"
 
+#import "SplitTableViewDataSource.h"
+
 @implementation UITableView (Binding)
 
 NSString *tableViewBindingObserverProperty = @"TableViewBindingObserver";
@@ -100,6 +102,16 @@ commitEditingStyleBlock:(UITableViewCommitEditingStyleBlock)editingBlock
         [binding release];
     }
  }
+
+- (void)unbindSection:(NSUInteger)section animated:(BOOL)animated
+{
+    if (self.dataSource && [self.dataSource isKindOfClass:[SplitTableViewDataSource class]]) {
+        BOOL deleted = [(SplitTableViewDataSource *)self.dataSource clearDelegateForSection:section];
+        if (deleted) {
+            [self deleteSections:[NSIndexSet indexSetWithIndex:section] withRowAnimation:UITableViewRowAnimationFade];
+        }
+    }
+}
 
 - (void)unbind {
     [self unbindProperty:tableViewBindingObserverProperty];

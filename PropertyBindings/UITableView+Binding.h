@@ -45,5 +45,6 @@ commitEditingStyleBlock:(UITableViewCommitEditingStyleBlock)editingBlock
       withSectionTitle:(NSString *)sectionTitle;
 
 - (void)unbind;
+- (void)unbindSection:(NSUInteger)section animated:(BOOL)animated;
 
 @end

@@ -14,5 +14,6 @@
 
 - (void)setDelegate:(id<UITableViewDataSource>)delegate forSection:(NSUInteger)section;
 - (void)clearDelegate:(id<UITableViewDataSource>)delegate forSection:(NSUInteger)section;
+- (BOOL)clearDelegateForSection:(NSUInteger)section;
 
 @end

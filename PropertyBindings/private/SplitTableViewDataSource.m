@@ -34,6 +34,15 @@
     }
 }
 
+- (BOOL)clearDelegateForSection:(NSUInteger)section
+{
+    if (self.delegates[@(section)]) {
+        [self.delegates removeObjectForKey:@(section)];
+        return YES;
+    }
+    return NO;
+}
+
 - (id<UITableViewDataSource>)delegateForSection:(NSInteger)section {
     return [self.delegates[@(section)] nonretainedObjectValue];
 }

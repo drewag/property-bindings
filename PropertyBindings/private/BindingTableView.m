@@ -74,7 +74,7 @@ commitEditingStyleBlock:(UITableViewCommitEditingStyleBlock)editingBlock
 - (void)activateWithChange:(NSDictionary *)change {
     NSNumber *kind = [change objectForKey:NSKeyValueChangeKindKey];
     if ([kind integerValue] == NSKeyValueChangeSetting) {
-        [self.tableView reloadData];
+        [self.tableView insertSections:[NSIndexSet indexSetWithIndex:self.section] withRowAnimation:UITableViewRowAnimationFade];
     }
     else {
         NSIndexSet *indexes = [change objectForKey:NSKeyValueChangeIndexesKey];
