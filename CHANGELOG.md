@@ -1,13 +1,17 @@
 # property-bindings CHANGELOG
 
-## 1.0.0
+## 1.1.1
 
-Initial release.
+Remove binding from cleared table view section binding
+
+## 1.1.0
+
+Added ability to unbind specific table view sections
 
 ## 1.0.1
 
 Fixed inclusion of actual source files
 
-## 1.1.0
+## 1.0.0
 
-Added ability to unbind specific table view sections
+Initial release.

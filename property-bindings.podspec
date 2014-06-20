@@ -6,7 +6,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = "property-bindings"
-  s.version          = "1.1.0"
+  s.version          = "1.1.1"
   s.summary          = "provide a mechanism to bind the property of one object to the property of another's through KVO"
   s.description      = <<-DESC
                        Property Bindings for Objective-C
