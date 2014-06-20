@@ -8,6 +8,9 @@
 
 #import "SplitTableViewDataSource.h"
 
+#import "BindingTableView.h"
+#import "BindingManager.h"
+
 @interface SplitTableViewDataSource ()
 
 @property (nonatomic, strong) NSMutableDictionary *delegates;
@@ -36,12 +39,18 @@
 
 - (BOOL)clearDelegateForSection:(NSUInteger)section
 {
-    if (self.delegates[@(section)]) {
+    NSValue *bindingValue = self.delegates[@(section)];
+    if (bindingValue) {
+        BindingTableView *binding = [bindingValue nonretainedObjectValue];
+        if ([binding isKindOfClass:[BindingTableView class]]) {
+            [[BindingManager sharedInstance] removeBindingsAssociatedWithObjects:binding.observedObject keyPath:binding.observedKeyPath];
+        }
         [self.delegates removeObjectForKey:@(section)];
         return YES;
     }
     return NO;
 }
+
 
 - (id<UITableViewDataSource>)delegateForSection:(NSInteger)section {
     return [self.delegates[@(section)] nonretainedObjectValue];
